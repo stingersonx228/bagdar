@@ -5,7 +5,7 @@
  * уметь объяснить любое своё решение (правило 1). Проценты шансов не считаем
  * нигде — только уровни high | medium | low (правило 3).
  */
-import type { Interest, Profile, Program, Reason } from '@/types';
+import type { Interest, Level, Profile, Program, Reason } from '@/types';
 import {
   ENGLISH_RANK,
   EXAM_LABELS,
@@ -347,47 +347,88 @@ export function languageBucket(profile: Profile, program: Program): Bucket {
   };
 }
 
+/** Насколько уровень оценки закрывает приоритет: high целиком, medium наполовину. */
+function levelShare(level: Level | null): number {
+  if (level === 'high') return 1;
+  if (level === 'medium') return 0.5;
+  return 0;
+}
+
 /**
- * Приоритеты пользователя. Сейчас движок честно отрабатывает только те, под
- * которые есть данные в Program: cost и language. Для prestige, career и city
- * в контракте Program нет ни одного поля, а выдумывать рейтинги нельзя
- * (правило 2) — это вынесено лиду как запрос на расширение контракта.
+ * Приоритеты пользователя.
+ *
+ * Бюджет измерения делится поровну между выбранными приоритетами, а не
+ * начисляется фиксированными пятёрками. Иначе человек с пятью приоритетами
+ * упирался бы в потолок и его набор приоритетов переставал бы что-либо
+ * различать — а это ровно то, что жюри проверяет.
+ *
+ * Приоритет city не отрабатывается: в Profile нет поля с желаемым городом,
+ * сопоставлять program.city не с чем. Это вопрос к контракту Profile, а не
+ * к движку.
  */
 export function prioritiesBucket(profile: Profile, program: Program): Bucket {
+  if (profile.priorities.length === 0) return { points: 0, reasons: [] };
+
   const reasons: Reason[] = [];
+  const perPriority = WEIGHTS.priorities / profile.priorities.length;
   let points = 0;
 
-  if (profile.priorities.includes('cost')) {
-    const cheap =
-      program.tuitionKztPerYear !== null &&
-      profile.budgetKztPerYear > 0 &&
-      program.tuitionKztPerYear <= profile.budgetKztPerYear * 0.7;
+  const award = (share: number, code: string, text: string) => {
+    if (share <= 0) return;
+    const earned = perPriority * share;
+    points += earned;
+    reasons.push(reason('match', code, text, earned));
+  };
 
-    if (program.grantAvailable || cheap) {
-      points += 5;
-      reasons.push(
-        reason(
-          'match',
+  for (const priority of profile.priorities) {
+    if (priority === 'cost') {
+      const cheap =
+        program.tuitionKztPerYear !== null &&
+        profile.budgetKztPerYear > 0 &&
+        program.tuitionKztPerYear <= profile.budgetKztPerYear * 0.7;
+
+      if (program.grantAvailable || cheap) {
+        award(
+          1,
           'priority_cost',
           program.grantAvailable
             ? 'Вы цените стоимость — здесь есть грант'
             : 'Вы цените стоимость — программа заметно дешевле вашего потолка',
-          5,
-        ),
-      );
+        );
+      }
+      continue;
     }
-  }
 
-  if (profile.priorities.includes('language')) {
-    const comfortable =
-      (program.languageOfStudy === 'kz' && profile.languages.kz) ||
-      (program.languageOfStudy === 'ru' && profile.languages.ru) ||
-      (program.languageOfStudy === 'en' && ENGLISH_RANK[profile.languages.en] >= ENGLISH_RANK.b2);
+    if (priority === 'language') {
+      const comfortable =
+        (program.languageOfStudy === 'kz' && profile.languages.kz) ||
+        (program.languageOfStudy === 'ru' && profile.languages.ru) ||
+        (program.languageOfStudy === 'en' && ENGLISH_RANK[profile.languages.en] >= ENGLISH_RANK.b2);
 
-    if (comfortable) {
-      points += 5;
-      reasons.push(
-        reason('match', 'priority_language', 'Вы цените язык обучения — этот вам подходит', 5),
+      if (comfortable) {
+        award(1, 'priority_language', 'Вы цените язык обучения — этот вам подходит');
+      }
+      continue;
+    }
+
+    if (priority === 'prestige') {
+      award(
+        levelShare(program.prestige),
+        'priority_prestige',
+        program.prestige === 'high'
+          ? 'Вы цените престиж — программа с высокой узнаваемостью'
+          : 'Вы цените престиж — узнаваемость программы средняя',
+      );
+      continue;
+    }
+
+    if (priority === 'career') {
+      award(
+        levelShare(program.career),
+        'priority_career',
+        program.career === 'high'
+          ? 'Вы цените карьеру — у направления сильные перспективы трудоустройства'
+          : 'Вы цените карьеру — перспективы направления средние',
       );
     }
   }
