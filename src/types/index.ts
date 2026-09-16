@@ -1,0 +1,43 @@
+/**
+ * Общие контракты проекта «Бағдар».
+ * ВЛАДЕЛЕЦ: лид. Зоны A/B/C этот файл не правят — нужно изменить контракт,
+ * остановись и скажи лиду (правило 9 в CLAUDE.md).
+ */
+
+export type Country = 'KZ' | 'KR' | 'TR' | 'CZ' | 'HU' | 'MY';
+export type Interest = 'it' | 'engineering' | 'business' | 'medicine' | 'design' | 'science' | 'humanities' | 'law';
+export type ExamId = 'ENT' | 'IELTS' | 'TOEFL' | 'SAT' | 'NUET' | 'TOPIK' | 'YOS';
+export type Level = 'high' | 'medium' | 'low';
+
+export interface ExamScore { id: ExamId; score: number | null; plannedDate: string | null }
+export interface Profile {
+  grade: 10 | 11;
+  interests: Interest[];          // 1..3, порядок = приоритет
+  gpa: number;                     // 2..5
+  languages: { kz: boolean; ru: boolean; en: 'none' | 'basic' | 'b1' | 'b2' | 'c1' };
+  exams: ExamScore[];
+  countries: Country[];            // ≥1
+  budgetKztPerYear: number;        // 0 = только грант
+  needsGrant: boolean;
+  priorities: Array<'cost' | 'prestige' | 'city' | 'career' | 'language'>;
+}
+
+export interface Deadline { id: string; label: string; date: string | null; sourceUrl: string | null }
+export interface Program {
+  id: string; university: string; program: string; country: Country; city: string;
+  interests: Interest[]; languageOfStudy: 'kz' | 'ru' | 'en' | 'local';
+  tuitionKztPerYear: number | null; grantAvailable: boolean;
+  requirements: { exam: ExamId; minScore: number | null }[];
+  minGpa: number | null; deadlines: Deadline[];
+  sourceUrl: string; checkedAt: string; isDemo: boolean;
+}
+
+export interface Reason { kind: 'match' | 'warning' | 'blocker'; code: string; text: string; weight: number }
+export interface Recommendation { program: Program; score: number; chance: Level; reasons: Reason[] }
+export interface Diagnosis { strengths: string[]; limits: string[]; goal: string; }
+
+export interface RoadmapStep {
+  id: string;                      // стабильный: `${programId|global}:${type}:${key}`
+  type: 'exam' | 'document' | 'deadline' | 'academic' | 'activity';
+  title: string; why: string; dueDate: string | null; sourceUrl: string | null; programIds: string[];
+}
