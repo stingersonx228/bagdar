@@ -10,30 +10,30 @@
       "engineering"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 2400000,
+    "tuitionKztPerYear": 3000000,
     "grantAvailable": true,
     "requirements": [
       {
         "exam": "ENT",
-        "minScore": 100
+        "minScore": 110
       },
       {
         "exam": "IELTS",
         "minScore": null
       }
     ],
-    "minGpa": 4,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "kbtu-is:application",
-        "label": "Подача документов",
+        "label": "Приём документов и заключение договора",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://kbtu.edu.kz/khbtu-khabyldau-komyssyiasy-bakalavryat"
       }
     ],
     "prestige": "medium",
     "career": "high",
-    "sourceUrl": "https://kbtu.edu.kz/",
+    "sourceUrl": "https://kbtu.edu.kz/ru/priemnaya-komissiya-kbtu",
     "checkedAt": "2026-09-16",
     "isDemo": true
   },
