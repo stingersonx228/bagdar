@@ -1,0 +1,68 @@
+[
+  {
+    "id": "kbtu-cs",
+    "university": "Казахстанско-Британский технический университет",
+    "program": "Информационные системы",
+    "country": "KZ",
+    "city": "Алматы",
+    "interests": ["it", "engineering"],
+    "languageOfStudy": "en",
+    "tuitionKztPerYear": 2400000,
+    "grantAvailable": true,
+    "requirements": [
+      { "exam": "ENT", "minScore": 100 },
+      { "exam": "IELTS", "minScore": null }
+    ],
+    "minGpa": 4,
+    "deadlines": [
+      { "id": "kbtu-cs:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+    ],
+    "sourceUrl": "https://kbtu.edu.kz/",
+    "checkedAt": "2026-09-16",
+    "isDemo": true
+  },
+  {
+    "id": "nu-eng",
+    "university": "Назарбаев Университет",
+    "program": "Инженерия",
+    "country": "KZ",
+    "city": "Астана",
+    "interests": ["engineering", "science"],
+    "languageOfStudy": "en",
+    "tuitionKztPerYear": null,
+    "grantAvailable": true,
+    "requirements": [
+      { "exam": "NUET", "minScore": null },
+      { "exam": "IELTS", "minScore": 6 }
+    ],
+    "minGpa": 4.5,
+    "deadlines": [
+      { "id": "nu-eng:application", "label": "Подача заявки", "date": null, "sourceUrl": null }
+    ],
+    "sourceUrl": "https://nu.edu.kz/",
+    "checkedAt": "2026-09-16",
+    "isDemo": true
+  },
+  {
+    "id": "hanyang-business",
+    "university": "Hanyang University",
+    "program": "Business Administration",
+    "country": "KR",
+    "city": "Сеул",
+    "interests": ["business"],
+    "languageOfStudy": "en",
+    "tuitionKztPerYear": 4200000,
+    "grantAvailable": false,
+    "requirements": [
+      { "exam": "IELTS", "minScore": 6 },
+      { "exam": "TOPIK", "minScore": null }
+    ],
+    "minGpa": 4,
+    "deadlines": [
+      { "id": "hanyang-business:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+    ],
+    "sourceUrl": "https://www.hanyang.ac.kr/",
+    "checkedAt": "2026-09-16",
+    "isDemo": true
+  }
+]
