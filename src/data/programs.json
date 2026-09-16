@@ -48,35 +48,29 @@
       "it"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 1800000,
+    "tuitionKztPerYear": 2500000,
     "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
         "exam": "ENT",
-        "minScore": 90
+        "minScore": null
       }
     ],
-    "minGpa": 4,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "astanait-se:application",
-        "label": "Подача документов",
+        "label": "Работа приёмной комиссии",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://astanait.edu.kz/ru/bachelor/"
       }
     ],
     "prestige": "medium",
     "career": "high",
-    "sourceUrl": "https://astanait.edu.kz/",
+    "sourceUrl": "https://astanait.edu.kz/ru/bachelor/",
     "checkedAt": "2026-09-16",
-    "unverified": [
-      "tuitionKztPerYear",
-      "grantAvailable",
-      "requirements",
-      "minGpa",
-      "deadlines"
-    ]
+    "unverified": []
   },
   {
     "id": "nu-eng",
@@ -95,33 +89,27 @@
     "requirements": [
       {
         "exam": "NUET",
-        "minScore": null
+        "minScore": 130
       },
       {
         "exam": "IELTS",
         "minScore": 6
       }
     ],
-    "minGpa": 4.5,
+    "minGpa": 4,
     "deadlines": [
       {
         "id": "nu-eng:application",
         "label": "Подача заявки",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://apply.nu.edu.kz/en/admissions/"
       }
     ],
     "prestige": "high",
     "career": "high",
-    "sourceUrl": "https://nu.edu.kz/",
+    "sourceUrl": "https://apply.nu.edu.kz/en/admissions/",
     "checkedAt": "2026-09-16",
-    "unverified": [
-      "tuitionKztPerYear",
-      "grantAvailable",
-      "requirements",
-      "minGpa",
-      "deadlines"
-    ]
+    "unverified": []
   },
   {
     "id": "satbayev-geo",
@@ -134,34 +122,30 @@
       "science"
     ],
     "languageOfStudy": "ru",
-    "tuitionKztPerYear": 1200000,
+    "tuitionKztPerYear": 1166940,
     "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
         "exam": "ENT",
-        "minScore": 80
+        "minScore": null
       }
     ],
-    "minGpa": 3.5,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "satbayev-geo:application",
         "label": "Подача документов",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://official.satbayev.university/ru/dlya-studentov/stoimost-obucheniya/stoimost-obucheniya-2025-2026"
       }
     ],
     "prestige": "medium",
     "career": "medium",
-    "sourceUrl": "https://satbayev.university/",
+    "sourceUrl": "https://official.satbayev.university/ru/dlya-studentov/stoimost-obucheniya/stoimost-obucheniya-2025-2026",
     "checkedAt": "2026-09-16",
     "unverified": [
-      "tuitionKztPerYear",
-      "grantAvailable",
-      "requirements",
-      "minGpa",
-      "deadlines"
+      "requirements"
     ]
   },
   {
@@ -174,8 +158,8 @@
       "business"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 3200000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 5876280,
+    "tuitionNote": "4 896 900 – 5 876 280 ₸ в год при нагрузке 30–36 кредитов; показан верхний край",
     "grantAvailable": true,
     "requirements": [
       {
@@ -187,7 +171,7 @@
         "minScore": 5.5
       }
     ],
-    "minGpa": 4,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "kimep-ba:application",
@@ -198,13 +182,11 @@
     ],
     "prestige": "high",
     "career": "high",
-    "sourceUrl": "https://kimep.kz/",
+    "sourceUrl": "https://www.kimep.kz/prospective-students/files/2026/05/tuition_fees_ugrad_eng.pdf",
     "checkedAt": "2026-09-16",
     "unverified": [
-      "tuitionKztPerYear",
-      "grantAvailable",
       "requirements",
-      "minGpa",
+      "grantAvailable",
       "deadlines"
     ]
   },
@@ -238,7 +220,7 @@
     ],
     "prestige": "medium",
     "career": "high",
-    "sourceUrl": "https://kaznmu.edu.kz/",
+    "sourceUrl": "https://kaznmu.edu.kz/wp-content/uploads/%D0%A0%D0%B0%D0%B7%D0%BC%D0%B5%D1%80-%D0%BE%D0%BF%D0%BB%D0%B0%D1%82%D1%8B-%D0%B7%D0%B0-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%9E%D0%9F-%D0%B2%D1%8B%D1%81%D1%88%D0%B5%D0%B3%D0%BE-%D0%B8-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B2%D1%83%D0%B7%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BD%D0%B0-2026-2027-2027-2028.pdf",
     "checkedAt": "2026-09-16",
     "unverified": [
       "tuitionKztPerYear",
@@ -290,16 +272,16 @@
     ]
   },
   {
-    "id": "almau-design",
+    "id": "almau-film",
     "university": "AlmaU",
-    "program": "Графический дизайн",
+    "program": "Цифровое кинопроизводство",
     "country": "KZ",
     "city": "Алматы",
     "interests": [
       "design"
     ],
     "languageOfStudy": "ru",
-    "tuitionKztPerYear": 2100000,
+    "tuitionKztPerYear": 2600000,
     "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
@@ -308,24 +290,22 @@
         "minScore": 75
       }
     ],
-    "minGpa": 3.5,
+    "minGpa": null,
     "deadlines": [
       {
-        "id": "almau-design:application",
+        "id": "almau-film:application",
         "label": "Подача документов",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://almau.edu.kz/"
       }
     ],
     "prestige": "medium",
     "career": "medium",
-    "sourceUrl": "https://almau.edu.kz/",
+    "sourceUrl": "https://almau.edu.kz/wp-content/uploads/2025/07/Stoimost-obucheniya-2025-2026.pdf",
     "checkedAt": "2026-09-16",
     "unverified": [
-      "tuitionKztPerYear",
-      "grantAvailable",
       "requirements",
-      "minGpa",
+      "grantAvailable",
       "deadlines"
     ]
   },

@@ -103,8 +103,10 @@ describe('жюри меняет бюджет', () => {
         (rec) => rec.program.id === 'kimep-ba',
       )!;
 
+    // Пороги взяты с запасом от реальной цены КИМЭП: тест проверяет реакцию на
+    // бюджет, а не конкретную цифру из прайса, и не должен падать при её росте.
     const poor = findKimep(1_000_000);
-    const rich = findKimep(5_000_000);
+    const rich = findKimep(9_000_000);
 
     expect(rich.score).toBeGreaterThan(poor.score);
     expect(rich.reasons.some((item) => item.code === 'fits_budget')).toBe(true);
