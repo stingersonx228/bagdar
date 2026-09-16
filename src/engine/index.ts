@@ -6,6 +6,7 @@
  * аргументом), поэтому результат воспроизводим в тестах.
  */
 export { recommend } from './recommend';
+export { diagnose } from './diagnose';
 
 export { WEIGHTS } from './scoring';
 export {
