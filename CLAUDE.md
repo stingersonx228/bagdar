@@ -60,6 +60,8 @@ export interface Program {
   tuitionKztPerYear: number | null; grantAvailable: boolean;
   requirements: { exam: ExamId; minScore: number | null }[];
   minGpa: number | null; deadlines: Deadline[];
+  prestige: Level | null;   // редакционная оценка, не факт из источника; шкала грубая намеренно
+  career: Level | null;     // то же самое про карьерные перспективы
   sourceUrl: string; checkedAt: string; isDemo: boolean;
 }
 

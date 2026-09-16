@@ -48,6 +48,8 @@ export function programWithDeadline(date: string | null): Program {
         sourceUrl: date === null ? null : 'https://example.kz/admission',
       },
     ],
+    prestige: 'medium',
+    career: 'medium',
     sourceUrl: 'https://example.kz/',
     checkedAt: '2026-09-16',
     isDemo: true,

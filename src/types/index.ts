@@ -29,6 +29,15 @@ export interface Program {
   tuitionKztPerYear: number | null; grantAvailable: boolean;
   requirements: { exam: ExamId; minScore: number | null }[];
   minGpa: number | null; deadlines: Deadline[];
+  /**
+   * Узнаваемость и селективность программы. Оценка редакционная, а не факт из
+   * источника, поэтому шкала намеренно грубая: точное число вроде места в
+   * рейтинге выглядело бы проверенным фактом, которым оно не является.
+   * null — не оценивали.
+   */
+  prestige: Level | null;
+  /** Карьерные перспективы направления. Шкала и оговорка те же, что у prestige. */
+  career: Level | null;
   sourceUrl: string; checkedAt: string; isDemo: boolean;
 }
 

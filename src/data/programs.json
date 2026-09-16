@@ -5,18 +5,34 @@
     "program": "Информационные системы",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["it", "engineering"],
+    "interests": [
+      "it",
+      "engineering"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2400000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 100 },
-      { "exam": "IELTS", "minScore": null }
+      {
+        "exam": "ENT",
+        "minScore": 100
+      },
+      {
+        "exam": "IELTS",
+        "minScore": null
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "kbtu-is:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "kbtu-is:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "high",
     "sourceUrl": "https://kbtu.edu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -27,17 +43,29 @@
     "program": "Программная инженерия",
     "country": "KZ",
     "city": "Астана",
-    "interests": ["it"],
+    "interests": [
+      "it"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 1800000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 90 }
+      {
+        "exam": "ENT",
+        "minScore": 90
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "astanait-se:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "astanait-se:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "high",
     "sourceUrl": "https://astanait.edu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -48,18 +76,34 @@
     "program": "Инженерия",
     "country": "KZ",
     "city": "Астана",
-    "interests": ["engineering", "science"],
+    "interests": [
+      "engineering",
+      "science"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": null,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "NUET", "minScore": null },
-      { "exam": "IELTS", "minScore": 6 }
+      {
+        "exam": "NUET",
+        "minScore": null
+      },
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      }
     ],
     "minGpa": 4.5,
     "deadlines": [
-      { "id": "nu-eng:application", "label": "Подача заявки", "date": null, "sourceUrl": null }
+      {
+        "id": "nu-eng:application",
+        "label": "Подача заявки",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "high",
     "sourceUrl": "https://nu.edu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -70,17 +114,30 @@
     "program": "Геология и разведка месторождений",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["engineering", "science"],
+    "interests": [
+      "engineering",
+      "science"
+    ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 1200000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 80 }
+      {
+        "exam": "ENT",
+        "minScore": 80
+      }
     ],
     "minGpa": 3.5,
     "deadlines": [
-      { "id": "satbayev-geo:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "satbayev-geo:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "medium",
     "sourceUrl": "https://satbayev.university/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -91,18 +148,33 @@
     "program": "Бизнес-администрирование",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["business"],
+    "interests": [
+      "business"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 3200000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 90 },
-      { "exam": "IELTS", "minScore": 5.5 }
+      {
+        "exam": "ENT",
+        "minScore": 90
+      },
+      {
+        "exam": "IELTS",
+        "minScore": 5.5
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "kimep-ba:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "kimep-ba:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "high",
     "sourceUrl": "https://kimep.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -113,17 +185,29 @@
     "program": "Общая медицина",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["medicine"],
+    "interests": [
+      "medicine"
+    ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 1900000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 110 }
+      {
+        "exam": "ENT",
+        "minScore": 110
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "kaznmu-med:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "kaznmu-med:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "high",
     "sourceUrl": "https://kaznmu.edu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -134,17 +218,30 @@
     "program": "Юриспруденция",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["law", "humanities"],
+    "interests": [
+      "law",
+      "humanities"
+    ],
     "languageOfStudy": "kz",
     "tuitionKztPerYear": 1100000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 95 }
+      {
+        "exam": "ENT",
+        "minScore": 95
+      }
     ],
     "minGpa": 3.5,
     "deadlines": [
-      { "id": "kaznu-law:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "kaznu-law:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "medium",
     "sourceUrl": "https://www.kaznu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -155,17 +252,29 @@
     "program": "Графический дизайн",
     "country": "KZ",
     "city": "Алматы",
-    "interests": ["design"],
+    "interests": [
+      "design"
+    ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 2100000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "ENT", "minScore": 75 }
+      {
+        "exam": "ENT",
+        "minScore": 75
+      }
     ],
     "minGpa": 3.5,
     "deadlines": [
-      { "id": "almau-design:application", "label": "Подача документов", "date": null, "sourceUrl": null }
+      {
+        "id": "almau-design:application",
+        "label": "Подача документов",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "medium",
     "sourceUrl": "https://almau.edu.kz/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -176,18 +285,33 @@
     "program": "Business Administration",
     "country": "KR",
     "city": "Сеул",
-    "interests": ["business"],
+    "interests": [
+      "business"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 4200000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6 },
-      { "exam": "TOPIK", "minScore": null }
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      },
+      {
+        "exam": "TOPIK",
+        "minScore": null
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "hanyang-business:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "hanyang-business:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "medium",
     "sourceUrl": "https://www.hanyang.ac.kr/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -198,18 +322,34 @@
     "program": "Computer Science and Engineering",
     "country": "KR",
     "city": "Сеул",
-    "interests": ["it", "engineering"],
+    "interests": [
+      "it",
+      "engineering"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 5000000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6.5 },
-      { "exam": "SAT", "minScore": null }
+      {
+        "exam": "IELTS",
+        "minScore": 6.5
+      },
+      {
+        "exam": "SAT",
+        "minScore": null
+      }
     ],
     "minGpa": 4.3,
     "deadlines": [
-      { "id": "korea-cs:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "korea-cs:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "high",
     "sourceUrl": "https://www.korea.ac.kr/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -220,18 +360,34 @@
     "program": "Electrical and Electronics Engineering",
     "country": "TR",
     "city": "Анкара",
-    "interests": ["engineering", "it"],
+    "interests": [
+      "engineering",
+      "it"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 3800000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "YOS", "minScore": null },
-      { "exam": "IELTS", "minScore": 6 }
+      {
+        "exam": "YOS",
+        "minScore": null
+      },
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "bilkent-ee:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "bilkent-ee:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "medium",
     "sourceUrl": "https://w3.bilkent.edu.tr/bilkent/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -242,18 +398,34 @@
     "program": "Architecture",
     "country": "TR",
     "city": "Анкара",
-    "interests": ["design", "engineering"],
+    "interests": [
+      "design",
+      "engineering"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2900000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "YOS", "minScore": null },
-      { "exam": "IELTS", "minScore": 5.5 }
+      {
+        "exam": "YOS",
+        "minScore": null
+      },
+      {
+        "exam": "IELTS",
+        "minScore": 5.5
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "metu-arch:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "metu-arch:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "medium",
     "sourceUrl": "https://www.metu.edu.tr/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -264,17 +436,30 @@
     "program": "Computer Science",
     "country": "CZ",
     "city": "Прага",
-    "interests": ["it", "science"],
+    "interests": [
+      "it",
+      "science"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2600000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6 }
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "cvut-cs:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "cvut-cs:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "high",
     "sourceUrl": "https://www.cvut.cz/en",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -285,17 +470,29 @@
     "program": "History",
     "country": "CZ",
     "city": "Прага",
-    "interests": ["humanities"],
+    "interests": [
+      "humanities"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2200000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6 }
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      }
     ],
     "minGpa": 3.8,
     "deadlines": [
-      { "id": "cuni-hum:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "cuni-hum:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "low",
     "sourceUrl": "https://cuni.cz/UKEN-1.html",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -306,17 +503,29 @@
     "program": "Mechanical Engineering",
     "country": "HU",
     "city": "Будапешт",
-    "interests": ["engineering"],
+    "interests": [
+      "engineering"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2000000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "IELTS", "minScore": 5.5 }
+      {
+        "exam": "IELTS",
+        "minScore": 5.5
+      }
     ],
     "minGpa": 3.8,
     "deadlines": [
-      { "id": "bme-mech:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "bme-mech:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "medium",
     "sourceUrl": "https://www.bme.hu/?language=en",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -327,17 +536,30 @@
     "program": "General Medicine",
     "country": "HU",
     "city": "Будапешт",
-    "interests": ["medicine", "science"],
+    "interests": [
+      "medicine",
+      "science"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 6500000,
     "grantAvailable": true,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6.5 }
+      {
+        "exam": "IELTS",
+        "minScore": 6.5
+      }
     ],
     "minGpa": 4.3,
     "deadlines": [
-      { "id": "semmelweis-med:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "semmelweis-med:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "high",
+    "career": "high",
     "sourceUrl": "https://semmelweis.hu/english/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -348,17 +570,30 @@
     "program": "Computer Science",
     "country": "MY",
     "city": "Куала-Лумпур",
-    "interests": ["it", "science"],
+    "interests": [
+      "it",
+      "science"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 1600000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 6 }
+      {
+        "exam": "IELTS",
+        "minScore": 6
+      }
     ],
     "minGpa": 4,
     "deadlines": [
-      { "id": "um-cs:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "um-cs:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "medium",
+    "career": "medium",
     "sourceUrl": "https://www.um.edu.my/",
     "checkedAt": "2026-09-16",
     "isDemo": true
@@ -369,17 +604,30 @@
     "program": "Design",
     "country": "MY",
     "city": "Куала-Лумпур",
-    "interests": ["design", "business"],
+    "interests": [
+      "design",
+      "business"
+    ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2800000,
     "grantAvailable": false,
     "requirements": [
-      { "exam": "IELTS", "minScore": 5.5 }
+      {
+        "exam": "IELTS",
+        "minScore": 5.5
+      }
     ],
     "minGpa": 3.5,
     "deadlines": [
-      { "id": "taylors-design:application", "label": "Приём заявок", "date": null, "sourceUrl": null }
+      {
+        "id": "taylors-design:application",
+        "label": "Приём заявок",
+        "date": null,
+        "sourceUrl": null
+      }
     ],
+    "prestige": "low",
+    "career": "medium",
     "sourceUrl": "https://university.taylors.edu.my/",
     "checkedAt": "2026-09-16",
     "isDemo": true
