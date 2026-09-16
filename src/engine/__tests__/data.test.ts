@@ -6,7 +6,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { PROGRAMS, programById } from '@/data';
-import type { Country, ExamId, Interest } from '@/types';
+import type { Country, ExamId, Interest, Level } from '@/types';
 
 const COUNTRIES: Country[] = ['KZ', 'KR', 'TR', 'CZ', 'HU', 'MY'];
 const INTERESTS: Interest[] = [
@@ -21,6 +21,7 @@ const INTERESTS: Interest[] = [
 ];
 const EXAMS: ExamId[] = ['ENT', 'IELTS', 'TOEFL', 'SAT', 'NUET', 'TOPIK', 'YOS'];
 const STUDY_LANGUAGES = ['kz', 'ru', 'en', 'local'];
+const LEVELS: Level[] = ['high', 'medium', 'low'];
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 describe('каталог программ', () => {
@@ -67,6 +68,23 @@ describe('каталог программ', () => {
         }
       }
     }
+  });
+
+  it('оценки престижа и карьеры — валидный уровень или честный null', () => {
+    const levels = [...LEVELS, null];
+
+    for (const program of PROGRAMS) {
+      expect(levels).toContain(program.prestige);
+      expect(levels).toContain(program.career);
+    }
+  });
+
+  it('оценки различают программы, иначе приоритеты ни на что не влияют', () => {
+    const prestige = new Set(PROGRAMS.map((program) => program.prestige));
+    const career = new Set(PROGRAMS.map((program) => program.career));
+
+    expect(prestige.size).toBeGreaterThan(1);
+    expect(career.size).toBeGreaterThan(1);
   });
 
   it('у каждой программы есть источник и дата проверки', () => {

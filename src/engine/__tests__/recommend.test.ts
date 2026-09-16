@@ -153,6 +153,77 @@ describe('жюри меняет экзамены', () => {
   });
 });
 
+describe('жюри меняет приоритеты', () => {
+  it('приоритет «престиж» поднимает узнаваемую программу над средней', () => {
+    const neutral = recommend(profileOf({ priorities: [] }), PROGRAMS);
+    const prestige = recommend(profileOf({ priorities: ['prestige'] }), PROGRAMS);
+
+    const gap = (recs: typeof neutral) => {
+      const high = recs.find((rec) => rec.program.id === 'nu-eng')!.score;
+      const medium = recs.find((rec) => rec.program.id === 'astanait-se')!.score;
+      return high - medium;
+    };
+
+    expect(gap(prestige)).toBeGreaterThan(gap(neutral));
+  });
+
+  it('приоритет «карьера» различает программы с разными перспективами', () => {
+    const recs = recommend(
+      profileOf({ interests: ['humanities'], countries: ['CZ'], priorities: ['career'] }),
+      PROGRAMS,
+    );
+
+    const weakCareer = recs.find((rec) => rec.program.id === 'cuni-hum')!;
+    expect(weakCareer.program.career).toBe('low');
+    expect(weakCareer.reasons.some((item) => item.code === 'priority_career')).toBe(false);
+  });
+
+  it('высокий уровень даёт причину, средний — тоже, но слабее', () => {
+    const recs = recommend(profileOf({ priorities: ['prestige'] }), PROGRAMS);
+
+    const high = recs.find((rec) => rec.program.id === 'nu-eng')!;
+    const medium = recs.find((rec) => rec.program.id === 'astanait-se')!;
+
+    const weightOf = (rec: typeof high) =>
+      rec.reasons.find((item) => item.code === 'priority_prestige')!.weight;
+
+    expect(weightOf(high)).toBeGreaterThan(weightOf(medium));
+  });
+
+  it('бюджет измерения делится между приоритетами, а не упирается в потолок', () => {
+    const single = recommend(profileOf({ priorities: ['prestige'] }), PROGRAMS).find(
+      (rec) => rec.program.id === 'nu-eng',
+    )!;
+    const many = recommend(
+      profileOf({ priorities: ['prestige', 'career', 'cost', 'language'] }),
+      PROGRAMS,
+    ).find((rec) => rec.program.id === 'nu-eng')!;
+
+    const prestigeWeight = (rec: typeof single) =>
+      rec.reasons.find((item) => item.code === 'priority_prestige')!.weight;
+
+    expect(prestigeWeight(single)).toBeGreaterThan(prestigeWeight(many));
+  });
+
+  it('пустой список приоритетов не ломает подбор', () => {
+    const recs = recommend(profileOf({ priorities: [] }), PROGRAMS);
+
+    expect(recs.length).toBeGreaterThan(0);
+    expect(recs.every((rec) => rec.reasons.every((item) => !item.code.startsWith('priority_')))).toBe(
+      true,
+    );
+  });
+
+  it('смена приоритетов меняет порядок выдачи', () => {
+    const byCost = ids(profileOf({ interests: ['business'], countries: ['KZ', 'KR'], budgetKztPerYear: 5_000_000, priorities: ['cost'] }));
+    const byPrestige = ids(
+      profileOf({ interests: ['business'], countries: ['KZ', 'KR'], budgetKztPerYear: 5_000_000, priorities: ['prestige'] }),
+    );
+
+    expect(byCost).not.toEqual(byPrestige);
+  });
+});
+
 describe('язык обучения', () => {
   it('без английского англоязычные программы блокируются', () => {
     const recs = recommend(
