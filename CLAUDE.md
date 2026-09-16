@@ -48,6 +48,7 @@ export interface Profile {
   languages: { kz: boolean; ru: boolean; en: 'none' | 'basic' | 'b1' | 'b2' | 'c1' };
   exams: ExamScore[];
   countries: Country[];            // ≥1
+  preferredCities: string[];       // мягкое предпочтение, не фильтр; работает через приоритет 'city'
   budgetKztPerYear: number;        // 0 = только грант
   needsGrant: boolean;
   priorities: Array<'cost' | 'prestige' | 'city' | 'career' | 'language'>;

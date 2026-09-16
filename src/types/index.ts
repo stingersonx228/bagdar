@@ -17,6 +17,14 @@ export interface Profile {
   languages: { kz: boolean; ru: boolean; en: 'none' | 'basic' | 'b1' | 'b2' | 'c1' };
   exams: ExamScore[];
   countries: Country[];            // ≥1
+  /**
+   * Желаемые города. Пустой массив = без предпочтений.
+   * В отличие от countries это НЕ фильтр, а мягкое предпочтение: работает
+   * только через приоритет 'city'. Учиться в невыбранной стране бессмысленно,
+   * а сильную программу в соседнем городе отбрасывать — нет.
+   * Значения сверяются с AVAILABLE_CITIES из @/data без учёта регистра.
+   */
+  preferredCities: string[];
   budgetKztPerYear: number;        // 0 = только грант
   needsGrant: boolean;
   priorities: Array<'cost' | 'prestige' | 'city' | 'career' | 'language'>;

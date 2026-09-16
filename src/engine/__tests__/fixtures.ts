@@ -15,6 +15,7 @@ export const BASE_PROFILE: Profile = {
     { id: 'IELTS', score: 6.5, plannedDate: null },
   ],
   countries: ['KZ'],
+  preferredCities: [],
   budgetKztPerYear: 2_500_000,
   needsGrant: true,
   priorities: ['cost', 'career'],
