@@ -205,6 +205,67 @@ describe('жюри меняет приоритеты', () => {
     expect(prestigeWeight(single)).toBeGreaterThan(prestigeWeight(many));
   });
 
+  it('приоритет «город» поднимает программы из выбранного города', () => {
+    const astana = profileOf({
+      interests: ['it', 'engineering'],
+      countries: ['KZ'],
+      preferredCities: ['Астана'],
+      priorities: ['city'],
+    });
+
+    const recs = recommend(astana, PROGRAMS);
+    const inAstana = recs.filter((rec) => rec.program.city === 'Астана');
+    const elsewhere = recs.filter((rec) => rec.program.city !== 'Астана');
+
+    expect(inAstana.length).toBeGreaterThan(0);
+    for (const rec of inAstana) {
+      expect(rec.reasons.some((item) => item.code === 'priority_city')).toBe(true);
+    }
+    for (const rec of elsewhere) {
+      expect(rec.reasons.some((item) => item.code === 'priority_city')).toBe(false);
+    }
+  });
+
+  it('смена города меняет порядок выдачи', () => {
+    const forCity = (city: string) =>
+      ids(
+        profileOf({
+          interests: ['it', 'engineering'],
+          countries: ['KZ'],
+          preferredCities: [city],
+          priorities: ['city'],
+        }),
+      );
+
+    expect(forCity('Астана')).not.toEqual(forCity('Алматы'));
+  });
+
+  it('город сверяется без учёта регистра и пробелов', () => {
+    const messy = recommend(
+      profileOf({ preferredCities: ['  аСТаНа  '], priorities: ['city'] }),
+      PROGRAMS,
+    ).find((rec) => rec.program.id === 'astanait-se')!;
+
+    expect(messy.reasons.some((item) => item.code === 'priority_city')).toBe(true);
+  });
+
+  it('приоритет «город» без выбранных городов ничего не ломает', () => {
+    const recs = recommend(profileOf({ preferredCities: [], priorities: ['city'] }), PROGRAMS);
+
+    expect(recs.length).toBeGreaterThan(0);
+    expect(recs.every((rec) => rec.reasons.every((item) => item.code !== 'priority_city'))).toBe(true);
+  });
+
+  it('город остаётся предпочтением, а не фильтром', () => {
+    const recs = recommend(
+      profileOf({ countries: ['KZ'], preferredCities: ['Астана'], priorities: ['city'] }),
+      PROGRAMS,
+    );
+
+    // Алматинские программы никуда не исчезают — они просто ниже.
+    expect(recs.some((rec) => rec.program.city === 'Алматы')).toBe(true);
+  });
+
   it('пустой список приоритетов не ломает подбор', () => {
     const recs = recommend(profileOf({ priorities: [] }), PROGRAMS);
 

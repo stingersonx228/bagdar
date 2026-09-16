@@ -5,7 +5,7 @@
  * держит правило 2: без подтверждённого источника факт помечен isDemo.
  */
 import { describe, expect, it } from 'vitest';
-import { PROGRAMS, programById } from '@/data';
+import { AVAILABLE_CITIES, PROGRAMS, citiesOfCountry, normalizeCity, programById } from '@/data';
 import type { Country, ExamId, Interest, Level } from '@/types';
 
 const COUNTRIES: Country[] = ['KZ', 'KR', 'TR', 'CZ', 'HU', 'MY'];
@@ -130,6 +130,35 @@ describe('каталог программ', () => {
       const inCountry = PROGRAMS.filter((program) => program.country === country);
       expect(inCountry.length).toBeGreaterThanOrEqual(2);
     }
+  });
+});
+
+describe('справочник городов', () => {
+  it('собран из каталога, без дублей и отсортирован', () => {
+    expect(AVAILABLE_CITIES.length).toBeGreaterThan(0);
+    expect(new Set(AVAILABLE_CITIES).size).toBe(AVAILABLE_CITIES.length);
+    expect([...AVAILABLE_CITIES].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))).toEqual(AVAILABLE_CITIES);
+  });
+
+  it('содержит город каждой программы', () => {
+    for (const program of PROGRAMS) {
+      expect(AVAILABLE_CITIES).toContain(program.city);
+    }
+  });
+
+  it('города страны — подмножество общего списка и не пусты', () => {
+    for (const country of COUNTRIES) {
+      const cities = citiesOfCountry(country);
+
+      expect(cities.length).toBeGreaterThan(0);
+      for (const city of cities) {
+        expect(AVAILABLE_CITIES).toContain(city);
+      }
+    }
+  });
+
+  it('normalizeCity сглаживает регистр и пробелы', () => {
+    expect(normalizeCity('  АлМаТы ')).toBe(normalizeCity('алматы'));
   });
 });
 
