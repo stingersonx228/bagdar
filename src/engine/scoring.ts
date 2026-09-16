@@ -6,6 +6,7 @@
  * нигде — только уровни high | medium | low (правило 3).
  */
 import type { Interest, Level, Profile, Program, Reason } from '@/types';
+import { normalizeCity } from '@/data';
 import {
   ENGLISH_RANK,
   EXAM_LABELS,
@@ -362,9 +363,7 @@ function levelShare(level: Level | null): number {
  * упирался бы в потолок и его набор приоритетов переставал бы что-либо
  * различать — а это ровно то, что жюри проверяет.
  *
- * Приоритет city не отрабатывается: в Profile нет поля с желаемым городом,
- * сопоставлять program.city не с чем. Это вопрос к контракту Profile, а не
- * к движку.
+ * Отрабатываются все пять приоритетов контракта.
  */
 export function prioritiesBucket(profile: Profile, program: Program): Bucket {
   if (profile.priorities.length === 0) return { points: 0, reasons: [] };
@@ -407,6 +406,18 @@ export function prioritiesBucket(profile: Profile, program: Program): Bucket {
 
       if (comfortable) {
         award(1, 'priority_language', 'Вы цените язык обучения — этот вам подходит');
+      }
+      continue;
+    }
+
+    if (priority === 'city') {
+      // Пустой список городов — приоритет просто не с чем сопоставлять.
+      // Молчим, а не пишем предупреждение на каждой карточке: собрать города
+      // должна анкета, а не объяснение программы.
+      const preferred = profile.preferredCities.map(normalizeCity);
+
+      if (preferred.includes(normalizeCity(program.city))) {
+        award(1, 'priority_city', `Город совпадает с вашим выбором — ${program.city}`);
       }
       continue;
     }
