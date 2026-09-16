@@ -11,6 +11,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 3000000,
+    "tuitionNote": "50 000 ₸ за кредит ECTS; годовая сумма — пересчёт из 60 кредитов",
     "grantAvailable": true,
     "requirements": [
       {
@@ -35,7 +36,7 @@
     "career": "high",
     "sourceUrl": "https://kbtu.edu.kz/ru/priemnaya-komissiya-kbtu",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": []
   },
   {
     "id": "astanait-se",
@@ -48,6 +49,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 1800000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -68,7 +70,13 @@
     "career": "high",
     "sourceUrl": "https://astanait.edu.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "nu-eng",
@@ -82,6 +90,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": null,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -106,7 +115,13 @@
     "career": "high",
     "sourceUrl": "https://nu.edu.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "satbayev-geo",
@@ -120,6 +135,7 @@
     ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 1200000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -140,7 +156,13 @@
     "career": "medium",
     "sourceUrl": "https://satbayev.university/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "kimep-ba",
@@ -153,6 +175,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 3200000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -177,7 +200,13 @@
     "career": "high",
     "sourceUrl": "https://kimep.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "kaznmu-med",
@@ -190,6 +219,7 @@
     ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 1900000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -210,7 +240,13 @@
     "career": "high",
     "sourceUrl": "https://kaznmu.edu.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "kaznu-law",
@@ -224,6 +260,7 @@
     ],
     "languageOfStudy": "kz",
     "tuitionKztPerYear": 1100000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -244,7 +281,13 @@
     "career": "medium",
     "sourceUrl": "https://www.kaznu.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "almau-design",
@@ -257,6 +300,7 @@
     ],
     "languageOfStudy": "ru",
     "tuitionKztPerYear": 2100000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -277,7 +321,13 @@
     "career": "medium",
     "sourceUrl": "https://almau.edu.kz/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "hanyang-business",
@@ -290,6 +340,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 4200000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -314,7 +365,13 @@
     "career": "medium",
     "sourceUrl": "https://www.hanyang.ac.kr/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "korea-cs",
@@ -328,6 +385,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 5000000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -352,7 +410,13 @@
     "career": "high",
     "sourceUrl": "https://www.korea.ac.kr/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "bilkent-ee",
@@ -366,6 +430,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 3800000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -390,7 +455,13 @@
     "career": "medium",
     "sourceUrl": "https://w3.bilkent.edu.tr/bilkent/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "metu-arch",
@@ -404,6 +475,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2900000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -428,7 +500,13 @@
     "career": "medium",
     "sourceUrl": "https://www.metu.edu.tr/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "cvut-cs",
@@ -442,6 +520,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2600000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -462,7 +541,13 @@
     "career": "high",
     "sourceUrl": "https://www.cvut.cz/en",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "cuni-hum",
@@ -475,6 +560,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2200000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -495,7 +581,13 @@
     "career": "low",
     "sourceUrl": "https://cuni.cz/UKEN-1.html",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "bme-mech",
@@ -508,6 +600,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2000000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -528,7 +621,13 @@
     "career": "medium",
     "sourceUrl": "https://www.bme.hu/?language=en",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "semmelweis-med",
@@ -542,6 +641,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 6500000,
+    "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
@@ -562,7 +662,13 @@
     "career": "high",
     "sourceUrl": "https://semmelweis.hu/english/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "um-cs",
@@ -576,6 +682,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 1600000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -596,7 +703,13 @@
     "career": "medium",
     "sourceUrl": "https://www.um.edu.my/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   },
   {
     "id": "taylors-design",
@@ -610,6 +723,7 @@
     ],
     "languageOfStudy": "en",
     "tuitionKztPerYear": 2800000,
+    "tuitionNote": null,
     "grantAvailable": false,
     "requirements": [
       {
@@ -630,6 +744,12 @@
     "career": "medium",
     "sourceUrl": "https://university.taylors.edu.my/",
     "checkedAt": "2026-09-16",
-    "isDemo": true
+    "unverified": [
+      "tuitionKztPerYear",
+      "grantAvailable",
+      "requirements",
+      "minGpa",
+      "deadlines"
+    ]
   }
 ]

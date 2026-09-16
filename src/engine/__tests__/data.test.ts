@@ -2,11 +2,19 @@
  * ВЛАДЕЛЕЦ: зона A.
  * Каталог программ приходит из JSON, а JSON типами не проверяется. Этот тест —
  * единственная защита от опечатки в стране, интересе или экзамене, и он же
- * держит правило 2: без подтверждённого источника факт помечен isDemo.
+ * держит правило 2: поле без источника перечислено в unverified.
  */
 import { describe, expect, it } from 'vitest';
-import { AVAILABLE_CITIES, PROGRAMS, citiesOfCountry, normalizeCity, programById } from '@/data';
-import type { Country, ExamId, Interest, Level } from '@/types';
+import {
+  AVAILABLE_CITIES,
+  PROGRAMS,
+  citiesOfCountry,
+  hasUnverifiedFacts,
+  isUnverified,
+  normalizeCity,
+  programById,
+} from '@/data';
+import type { Country, ExamId, Interest, Level, VerifiableField } from '@/types';
 
 const COUNTRIES: Country[] = ['KZ', 'KR', 'TR', 'CZ', 'HU', 'MY'];
 const INTERESTS: Interest[] = [
@@ -22,6 +30,13 @@ const INTERESTS: Interest[] = [
 const EXAMS: ExamId[] = ['ENT', 'IELTS', 'TOEFL', 'SAT', 'NUET', 'TOPIK', 'YOS'];
 const STUDY_LANGUAGES = ['kz', 'ru', 'en', 'local'];
 const LEVELS: Level[] = ['high', 'medium', 'low'];
+const VERIFIABLE_FIELDS: VerifiableField[] = [
+  'tuitionKztPerYear',
+  'grantAvailable',
+  'requirements',
+  'minGpa',
+  'deadlines',
+];
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 describe('каталог программ', () => {
@@ -105,12 +120,34 @@ describe('каталог программ', () => {
     }
   });
 
-  it('непроверенные данные помечены isDemo — UI покажет бейдж', () => {
+  it('в unverified перечислены только допустимые поля', () => {
     for (const program of PROGRAMS) {
-      expect(typeof program.isDemo).toBe('boolean');
+      expect(Array.isArray(program.unverified)).toBe(true);
+      expect(new Set(program.unverified).size).toBe(program.unverified.length);
+
+      for (const field of program.unverified) {
+        expect(VERIFIABLE_FIELDS).toContain(field);
+      }
     }
-    // Пока ни один факт не подтверждён вручную по официальному сайту.
-    expect(PROGRAMS.every((program) => program.isDemo)).toBe(true);
+  });
+
+  it('сверенная программа ведёт источник на конкретную страницу, а не на главную', () => {
+    for (const program of PROGRAMS) {
+      if (hasUnverifiedFacts(program)) continue;
+
+      // У главной страницы путь пустой или «/» — на ней фактов не найти.
+      expect(new URL(program.sourceUrl).pathname.replace(/\/$/, '').length).toBeGreaterThan(0);
+    }
+  });
+
+  it('пересчитанная стоимость обязана нести пояснение', () => {
+    for (const program of PROGRAMS) {
+      if (program.tuitionNote === null) continue;
+
+      expect(program.tuitionNote.length).toBeGreaterThan(0);
+      expect(program.tuitionKztPerYear).not.toBeNull();
+      expect(isUnverified(program, 'tuitionKztPerYear')).toBe(false);
+    }
   });
 
   it('покрывает все страны и все направления контракта', () => {

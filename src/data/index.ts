@@ -1,20 +1,33 @@
 /**
  * ВЛАДЕЛЕЦ: зона A. Точка входа к данным о программах.
  *
- * Правило 2 из CLAUDE.md: у каждого факта есть sourceUrl и checkedAt. Пока
- * факт не подтверждён источником — программа помечена isDemo: true, и UI
- * обязан показать бейдж «демо-данные». Неизвестный дедлайн — date: null,
- * в интерфейсе «уточнить на сайте», а не выдуманная дата.
+ * Правило 2 из CLAUDE.md: у каждого факта есть sourceUrl и checkedAt. Поля без
+ * источника перечислены в program.unverified, и UI обязан показать на них
+ * бейдж «демо-данные». Неизвестный дедлайн — date: null, в интерфейсе
+ * «уточнить на сайте», а не выдуманная дата.
  *
  * Приведение типа — граница JSON: структура файла проверяется тестом зоны A.
  */
-import type { Country, Program } from '@/types';
+import type { Country, Program, VerifiableField } from '@/types';
 import raw from './programs.json';
 
 export const PROGRAMS = raw as Program[];
 
 export function programById(id: string): Program | null {
   return PROGRAMS.find((program) => program.id === id) ?? null;
+}
+
+/**
+ * Нужен ли бейдж «демо-данные» на конкретном поле.
+ * Зоны B и C спрашивают через эту функцию, а не читают массив напрямую.
+ */
+export function isUnverified(program: Program, field: VerifiableField): boolean {
+  return program.unverified.includes(field);
+}
+
+/** Есть ли у программы хоть один неподтверждённый факт. */
+export function hasUnverifiedFacts(program: Program): boolean {
+  return program.unverified.length > 0;
 }
 
 /** Сравнение без учёта регистра и лишних пробелов. */

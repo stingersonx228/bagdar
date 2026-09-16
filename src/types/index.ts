@@ -31,10 +31,32 @@ export interface Profile {
 }
 
 export interface Deadline { id: string; label: string; date: string | null; sourceUrl: string | null }
+
+/**
+ * Поля программы, которые обязаны опираться на источник.
+ * prestige и career сюда не входят: они редакционные по определению, об этом
+ * сказано в самих полях.
+ */
+export type VerifiableField =
+  | 'tuitionKztPerYear'
+  | 'grantAvailable'
+  | 'requirements'
+  | 'minGpa'
+  | 'deadlines';
+
 export interface Program {
   id: string; university: string; program: string; country: Country; city: string;
   interests: Interest[]; languageOfStudy: 'kz' | 'ru' | 'en' | 'local';
-  tuitionKztPerYear: number | null; grantAvailable: boolean;
+  tuitionKztPerYear: number | null;
+  /**
+   * Пояснение к цене, когда источник публикует её в другой единице.
+   * Вузы Казахстана считают в кредитах ECTS, а не в годах, поэтому годовая
+   * сумма бывает пересчётом (60 ECTS = учебный год). UI обязан показать эту
+   * строку рядом с цифрой, иначе пересчёт выглядит цитатой из прайса.
+   * null — источник сам даёт стоимость за год.
+   */
+  tuitionNote: string | null;
+  grantAvailable: boolean;
   requirements: { exam: ExamId; minScore: number | null }[];
   minGpa: number | null; deadlines: Deadline[];
   /**
@@ -46,7 +68,14 @@ export interface Program {
   prestige: Level | null;
   /** Карьерные перспективы направления. Шкала и оговорка те же, что у prestige. */
   career: Level | null;
-  sourceUrl: string; checkedAt: string; isDemo: boolean;
+  sourceUrl: string; checkedAt: string;
+  /**
+   * Поля, под которые источника пока нет. Пустой массив = всё подтверждено.
+   * Заменил булев isDemo: у одной программы стоимость может быть сверена с
+   * прайсом, а требование к GPA — нет, и одним флагом это не выразить.
+   * UI ставит бейдж «демо-данные» точечно на перечисленные поля.
+   */
+  unverified: VerifiableField[];
 }
 
 export interface Reason { kind: 'match' | 'warning' | 'blocker'; code: string; text: string; weight: number }

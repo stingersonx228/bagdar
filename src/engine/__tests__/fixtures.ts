@@ -38,6 +38,7 @@ export function programWithDeadline(date: string | null): Program {
     interests: ['it'],
     languageOfStudy: 'ru',
     tuitionKztPerYear: 1_000_000,
+    tuitionNote: null,
     grantAvailable: true,
     requirements: [{ exam: 'ENT', minScore: 90 }],
     minGpa: 4,
@@ -53,6 +54,6 @@ export function programWithDeadline(date: string | null): Program {
     career: 'medium',
     sourceUrl: 'https://example.kz/',
     checkedAt: '2026-09-16',
-    isDemo: true,
+    unverified: [],
   };
 }
