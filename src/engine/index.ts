@@ -7,6 +7,7 @@
  */
 export { recommend } from './recommend';
 export { diagnose } from './diagnose';
+export { buildRoadmap, nextStep } from './roadmap';
 
 export { WEIGHTS } from './scoring';
 export {
