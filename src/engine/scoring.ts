@@ -183,9 +183,11 @@ export function academicBucket(profile: Profile, program: Program): Bucket {
 
   let gpaPoints = gpaMax * 0.5;
   if (program.minGpa === null) {
-    reasons.push(
-      reason('warning', 'gpa_unknown', 'Требование к среднему баллу не подтверждено', gpaPoints),
-    );
+    // Причину не добавляем намеренно. Это пробел в данных, а не факт о человеке,
+    // и он уже виден по unverified и бейджу «демо-данные». Большинство вузов
+    // порог не публикует, так что такая причина висела бы на каждой карточке и
+    // вытесняла бы то, ради чего карточку читают.
+    gpaPoints = gpaMax * 0.5;
   } else if (profile.gpa >= program.minGpa) {
     gpaPoints = gpaMax;
     reasons.push(

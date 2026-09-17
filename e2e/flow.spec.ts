@@ -5,36 +5,66 @@
  */
 import { expect, test } from '@playwright/test';
 
-const STATIONS = [
-  { heading: 'Бағдар', path: '/start' },
-  { heading: 'Анкета', path: '/profile' },
-  { heading: 'Диагностика', path: '/diagnosis' },
-  { heading: 'Рекомендации', path: '/results' },
-  { heading: 'Сравнение', path: '/compare' },
-  { heading: 'Маршрут', path: '/roadmap' },
-] as const;
-
 test('корень ведёт на первую станцию', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/\/start$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Бағдар');
 });
 
-test('маршрут проходится кнопками от начала до конца', async ({ page }) => {
+test('без анкеты экраны результата честно просят её заполнить', async ({ page }) => {
+  await page.goto('/results');
+
+  await expect(page.getByText('Сначала анкета')).toBeVisible();
+  await page.getByRole('link', { name: 'Перейти к анкете' }).click();
+  await expect(page).toHaveURL(/\/profile$/);
+});
+
+test('маршрут проходится от начала до плана подготовки', async ({ page }) => {
   await page.goto('/start');
+  await page.getByRole('link', { name: 'Начать маршрут' }).click();
 
-  for (const [index, station] of STATIONS.entries()) {
-    await expect(page).toHaveURL(new RegExp(`${station.path}$`));
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(station.heading);
-    await expect(page.getByText(`Станция ${index + 1} из ${STATIONS.length}`)).toBeVisible();
+  await expect(page).toHaveURL(/\/profile$/);
+  await page.getByRole('button', { name: 'Заполнить примером' }).click();
+  await page.getByRole('button', { name: 'Показать рекомендации' }).click();
 
-    const isLast = index === STATIONS.length - 1;
-    if (!isLast) {
-      await page.getByRole('link', { name: /Начать маршрут|Дальше/ }).click();
-    }
-  }
+  // Диагностика считается из профиля, а не из заглушки.
+  await expect(page).toHaveURL(/\/diagnosis$/);
+  await expect(page.getByText('Цель маршрута')).toBeVisible();
+  await page.getByRole('link', { name: /Дальше/ }).click();
 
-  // На последней станции кнопка возвращает в начало маршрута.
-  await page.getByRole('link', { name: 'Пройти маршрут заново' }).click();
-  await expect(page).toHaveURL(/\/start$/);
+  // Рекомендаций должно быть минимум три — это требование кейса.
+  await expect(page).toHaveURL(/\/results$/);
+  const compareBoxes = page.getByRole('checkbox', { name: 'В сравнение' });
+  expect(await compareBoxes.count()).toBeGreaterThanOrEqual(3);
+
+  await compareBoxes.nth(0).check();
+  await compareBoxes.nth(1).check();
+  await page.getByRole('link', { name: /Дальше/ }).click();
+
+  // Сравнение показывает обе выбранные программы столбцами.
+  await expect(page).toHaveURL(/\/compare$/);
+  await expect(page.getByRole('row', { name: /Стоимость в год/ })).toBeVisible();
+  await page.getByRole('link', { name: /Дальше/ }).click();
+
+  // План собран, и первый невыполненный шаг подписан как следующий.
+  await expect(page).toHaveURL(/\/roadmap$/);
+  // exact, иначе совпадает ещё и подпись «следующий шаг» на самом шаге.
+  await expect(page.getByText('Следующий шаг', { exact: true })).toBeVisible();
+
+  const steps = page.getByRole('checkbox');
+  expect(await steps.count()).toBeGreaterThan(0);
+  await expect(page.getByText(/^0 из \d+$/)).toBeVisible();
+
+  await steps.first().check();
+  await expect(page.getByText(/^1 из \d+$/)).toBeVisible();
+});
+
+test('ответы переживают перезагрузку страницы', async ({ page }) => {
+  await page.goto('/profile');
+  await page.getByRole('button', { name: 'Заполнить примером' }).click();
+  await page.getByRole('button', { name: 'Показать рекомендации' }).click();
+  await expect(page).toHaveURL(/\/diagnosis$/);
+
+  await page.reload();
+  await expect(page.getByText('Цель маршрута')).toBeVisible();
 });

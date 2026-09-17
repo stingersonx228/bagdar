@@ -1,17 +1,15 @@
-/** ВЛАДЕЛЕЦ: зона C. Станция 4 — рекомендации (минимум 3 программы с объяснением). */
+/** ВЛАДЕЛЕЦ: зона C. Станция 4 — рекомендации. */
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
-import { StepNav } from '@/components/ui/StepNav';
+import { ResultsView } from './ResultsView';
 
 export default function ResultsPage() {
   return (
     <>
       <ScreenHeader
         title="Рекомендации"
-        lead="Программы, подобранные движком под ваш профиль: шанс high / medium / low и причины, почему программа попала в список."
+        lead="Программы подобраны движком под ваш профиль. Рядом с каждой — почему она здесь и что мешает."
       />
-      <div className="mt-auto">
-        <StepNav />
-      </div>
+      <ResultsView />
     </>
   );
 }
