@@ -206,10 +206,10 @@
     "requirements": [
       {
         "exam": "ENT",
-        "minScore": 110
+        "minScore": null
       }
     ],
-    "minGpa": 4,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "kaznmu-med:application",
@@ -221,12 +221,10 @@
     "prestige": "medium",
     "career": "high",
     "sourceUrl": "https://kaznmu.edu.kz/wp-content/uploads/%D0%A0%D0%B0%D0%B7%D0%BC%D0%B5%D1%80-%D0%BE%D0%BF%D0%BB%D0%B0%D1%82%D1%8B-%D0%B7%D0%B0-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%9E%D0%9F-%D0%B2%D1%8B%D1%81%D1%88%D0%B5%D0%B3%D0%BE-%D0%B8-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B2%D1%83%D0%B7%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE-%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D0%BD%D0%B0-2026-2027-2027-2028.pdf",
-    "checkedAt": "2026-09-16",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
-      "minGpa",
       "deadlines"
     ]
   },
@@ -241,33 +239,31 @@
       "humanities"
     ],
     "languageOfStudy": "kz",
-    "tuitionKztPerYear": 1100000,
+    "tuitionKztPerYear": 1900000,
     "tuitionNote": null,
     "grantAvailable": true,
     "requirements": [
       {
         "exam": "ENT",
-        "minScore": 95
+        "minScore": null
       }
     ],
-    "minGpa": 3.5,
+    "minGpa": null,
     "deadlines": [
       {
         "id": "kaznu-law:application",
         "label": "Подача документов",
         "date": null,
-        "sourceUrl": null
+        "sourceUrl": "https://welcome.kaznu.kz/ru/admissions/bachelor/"
       }
     ],
     "prestige": "high",
     "career": "medium",
-    "sourceUrl": "https://www.kaznu.kz/",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://welcome.kaznu.kz/ru/admissions/bachelor/stoimost/",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
-      "minGpa",
       "deadlines"
     ]
   },

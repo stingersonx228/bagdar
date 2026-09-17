@@ -136,10 +136,13 @@ describe('жюри меняет экзамены', () => {
   });
 
   it('балл ниже требуемого — это блокер, а не предупреждение', () => {
+    // Берём программу с подтверждённым порогом: у КБТУ это ЕНТ 110 из
+    // официальной таблицы. Там, где вуз порог не публикует, minScore = null,
+    // и блокеру взяться неоткуда.
     const rec = recommend(
       profileOf({ exams: [{ id: 'ENT', score: 50, plannedDate: null }] }),
       PROGRAMS,
-    ).find((item) => item.program.id === 'kaznmu-med')!;
+    ).find((item) => item.program.id === 'kbtu-is')!;
 
     expect(rec.reasons.some((item) => item.kind === 'blocker' && item.code === 'exam_low')).toBe(true);
     expect(rec.chance).toBe('low');
