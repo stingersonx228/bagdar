@@ -7,6 +7,7 @@ import { LoadingState, NeedsProfile } from '@/components/ui/NeedsProfile';
 import { ProgramCard } from '@/components/ui/ProgramCard';
 import { StepNav } from '@/components/ui/StepNav';
 import { ExplainBlock } from './ExplainBlock';
+import { ResultsTuner } from './ResultsTuner';
 import { buttonClass } from '@/components/ui/Button';
 import { useJourney } from '@/store/useJourney';
 import { useJourneyView } from '@/store/useDerived';
@@ -51,6 +52,8 @@ export function ResultsView() {
           Изменить ответы
         </Link>
       </Card>
+
+      <ResultsTuner profile={profile} />
 
       <ExplainBlock recommendations={recommendations} />
 

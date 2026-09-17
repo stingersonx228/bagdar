@@ -87,3 +87,41 @@ test('пересказ от модели не может сломать экра
   expect(await cards.count()).toBe(before);
   await expect(cards.first()).toBeVisible();
 });
+
+async function fillSample(page: import('@playwright/test').Page) {
+  await page.goto('/profile');
+  await page.getByRole('button', { name: 'Заполнить примером' }).click();
+  await page.getByRole('button', { name: 'Показать рекомендации' }).click();
+  await expect(page).toHaveURL(/\/diagnosis$/);
+}
+
+test('смена страны прямо на выдаче меняет список', async ({ page }) => {
+  await fillSample(page);
+  await page.goto('/results');
+
+  const titles = page.getByRole('heading', { level: 2 });
+  const before = await titles.allTextContents();
+  expect(before.length).toBeGreaterThanOrEqual(3);
+
+  // Это главный сценарий кейса: жюри меняет параметр и результат обязан
+  // заметно измениться, причём без похода в анкету и обратно.
+  await page.getByRole('button', { name: 'Чехия' }).click();
+
+  await expect
+    .poll(async () => (await titles.allTextContents()).join('|'))
+    .not.toBe(before.join('|'));
+});
+
+test('сброс стирает ответы и возвращает на первую станцию', async ({ page }) => {
+  await fillSample(page);
+  await page.goto('/roadmap');
+
+  await page.getByRole('button', { name: 'Начать заново' }).click();
+  await page.getByRole('button', { name: 'Да, удалить и начать заново' }).click();
+
+  await expect(page).toHaveURL(/\/start$/);
+
+  // Профиля больше нет: экран результата снова зовёт в анкету.
+  await page.goto('/results');
+  await expect(page.getByText('Сначала анкета')).toBeVisible();
+});
