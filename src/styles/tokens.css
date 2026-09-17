@@ -1,13 +1,14 @@
 /**
  * Дизайн-токены «Бағдар».
  * ВЛАДЕЛЕЦ: зона B. Метафора — маршрут поступления как линия метро:
- * зелёная линия, станции, «вы здесь». Здесь минимальный набор, B расширяет.
+ * зелёная линия, станции, «вы здесь».
  */
 
 @theme {
   /* Линия маршрута и акцент */
   --color-line: #0b7a5b;
   --color-line-soft: #d7ebe2;
+  --color-line-dark: #075740;
 
   /* Текст */
   --color-ink: #10221c;
@@ -16,10 +17,25 @@
   /* Поверхности */
   --color-canvas: #f4f7f5;
   --color-surface: #ffffff;
+  --color-hairline: #e2eae6;
 
   /* Станции прогресса */
   --color-station: #c3d3cb;
   --color-station-done: #0b7a5b;
+
+  /* Уровни шанса и статусы причин.
+     Зелёный/янтарный/красный — но текст всегда дублирует цвет словом,
+     потому что на цвет полагаться нельзя. */
+  --color-ok: #0b7a5b;
+  --color-ok-soft: #dcefe7;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fbeed2;
+  --color-danger: #9b2c2c;
+  --color-danger-soft: #fbe3e3;
+
+  /* Бейдж непроверенных данных */
+  --color-demo: #5b5470;
+  --color-demo-soft: #ece9f4;
 
   --font-sans: ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
