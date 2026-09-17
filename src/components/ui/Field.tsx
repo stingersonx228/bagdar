@@ -28,9 +28,30 @@ export function Field({
   );
 }
 
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
+/**
+ * Фон задаётся через tone, а не классом снаружи. Две утилиты фона в одной
+ * строке конфликтуют, и побеждает та, что позже в сгенерированном CSS, — из-за
+ * этого акцентные карточки молча становились белыми.
+ */
+export type CardTone = 'surface' | 'accent' | 'warn';
+
+const TONE: Record<CardTone, string> = {
+  surface: 'bg-surface border-hairline',
+  accent: 'bg-line-soft border-line-soft',
+  warn: 'bg-warn-soft border-warn-soft',
+};
+
+export function Card({
+  children,
+  className = '',
+  tone = 'surface',
+}: {
+  children: ReactNode;
+  className?: string;
+  tone?: CardTone;
+}) {
   return (
-    <div className={`rounded-card border border-hairline bg-surface p-4 ${className}`.trim()}>
+    <div className={`rounded-card border p-4 shadow-card ${TONE[tone]} ${className}`.trim()}>
       {children}
     </div>
   );

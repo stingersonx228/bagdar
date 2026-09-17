@@ -101,7 +101,7 @@ export function CompareView() {
   return (
     <div className="flex flex-col gap-4">
       {compared.length === 1 ? (
-        <Card className="bg-warn-soft">
+        <Card tone="warn">
           <p className="text-sm text-ink">
             Выбрана одна программа. Сравнение имеет смысл от двух — отметьте ещё одну в
             рекомендациях, разница станет видна сразу.
