@@ -1,7 +1,14 @@
 'use client';
 
-/** ВЛАДЕЛЕЦ: зона C. Станция 6 — план подготовки, следующий шаг и прогресс. */
+/**
+ * ВЛАДЕЛЕЦ: зона C. Станция 6 — план подготовки, следующий шаг и прогресс.
+ *
+ * План нарисован той же линией метро, что и обзор маршрута на входе: шаги —
+ * это станции, выполненные закрашены, ближайший невыполненный подсвечен. Так
+ * метафора доживает до конца пути, а не остаётся в шапке.
+ */
 import { Card } from '@/components/ui/Field';
+import { MetroLine, type Station, type StationState } from '@/components/ui/MetroLine';
 import { LoadingState, NeedsProfile } from '@/components/ui/NeedsProfile';
 import { StepNav } from '@/components/ui/StepNav';
 import { useJourney } from '@/store/useJourney';
@@ -16,52 +23,57 @@ const TYPE_LABEL: Record<RoadmapStep['type'], string> = {
   activity: 'Активность',
 };
 
-function StepRow({
+function StepBlock({
   step,
   done,
-  highlighted,
+  current,
   onToggle,
 }: {
   step: RoadmapStep;
   done: boolean;
-  highlighted: boolean;
+  current: boolean;
   onToggle: () => void;
 }) {
   return (
-    <Card className={highlighted ? 'border-line ring-2 ring-line-soft' : ''}>
+    <div
+      className={`rounded-card border bg-surface p-4 shadow-card transition-colors ${
+        current ? 'border-line' : 'border-hairline'
+      }`}
+    >
       <label className="flex cursor-pointer items-start gap-3">
         <input
           type="checkbox"
           checked={done}
           onChange={onToggle}
-          className="mt-1 size-5 shrink-0 accent-line"
+          className="mt-0.5 size-5 shrink-0 accent-line"
         />
         <span className="flex flex-col gap-1">
-          <span className="flex flex-wrap items-center gap-2 text-xs text-muted">
+          <span className="flex flex-wrap items-center gap-2 text-xs">
             <span className="rounded-full bg-line-soft px-2 py-0.5 text-line-dark">
               {TYPE_LABEL[step.type]}
             </span>
-            {step.dueDate ? <span>до {step.dueDate}</span> : null}
-            {highlighted ? <span className="font-semibold text-line">следующий шаг</span> : null}
+            {step.dueDate ? <span className="text-muted">до {step.dueDate}</span> : null}
+            {current ? <span className="font-semibold text-line">вы здесь</span> : null}
           </span>
-          <span className={`text-base font-medium ${done ? 'text-muted line-through' : 'text-ink'}`}>
+          <span
+            className={`text-base font-medium ${done ? 'text-muted line-through' : 'text-ink'}`}
+          >
             {step.title}
           </span>
           <span className="text-sm text-muted">{step.why}</span>
-          {step.sourceUrl ? (
-            <a
-              href={step.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(event) => event.stopPropagation()}
-              className="text-sm font-medium text-line underline underline-offset-2"
-            >
-              Открыть источник
-            </a>
-          ) : null}
         </span>
       </label>
-    </Card>
+      {step.sourceUrl ? (
+        <a
+          href={step.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-block pl-8 text-sm font-medium text-line underline underline-offset-2"
+        >
+          Открыть источник
+        </a>
+      ) : null}
+    </div>
   );
 }
 
@@ -85,14 +97,33 @@ export function RoadmapView() {
   const done = new Set(completedStepIds);
   const percent = Math.round((doneCount / steps.length) * 100);
 
+  const stations: Station[] = steps.map((step) => {
+    const isDone = done.has(step.id);
+    const isCurrent = nextStep?.id === step.id;
+    const state: StationState = isDone ? 'done' : isCurrent ? 'current' : 'upcoming';
+
+    return {
+      key: step.id,
+      state,
+      content: (
+        <StepBlock
+          step={step}
+          done={isDone}
+          current={isCurrent}
+          onToggle={() => toggleStep(step.id)}
+        />
+      ),
+    };
+  });
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <Card className="flex flex-col gap-3">
         <div className="flex items-baseline justify-between gap-2">
           <p className="text-base font-medium text-ink">
             {nextStep ? 'Следующий шаг' : 'Все шаги выполнены'}
           </p>
-          <p className="text-sm text-muted">
+          <p className="text-sm tabular-nums text-muted">
             {doneCount} из {steps.length}
           </p>
         </div>
@@ -111,15 +142,7 @@ export function RoadmapView() {
         </div>
       </Card>
 
-      {steps.map((step) => (
-        <StepRow
-          key={step.id}
-          step={step}
-          done={done.has(step.id)}
-          highlighted={nextStep?.id === step.id}
-          onToggle={() => toggleStep(step.id)}
-        />
-      ))}
+      <MetroLine stations={stations} />
 
       <StepNav />
     </div>

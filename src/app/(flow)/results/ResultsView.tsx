@@ -40,7 +40,7 @@ export function ResultsView() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Card className="flex flex-col gap-2 bg-line-soft">
+      <Card tone="accent" className="flex flex-col gap-2">
         <p className="text-sm text-ink">
           Подобрано {recommendations.length} программ. Отметьте те, что интересны, — на следующей
           станции сравним их рядом.

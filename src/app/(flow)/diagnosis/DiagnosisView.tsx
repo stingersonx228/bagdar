@@ -37,7 +37,7 @@ export function DiagnosisView() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Card className="flex flex-col gap-1 bg-line-soft">
+      <Card tone="accent" className="flex flex-col gap-1">
         <p className="text-sm text-muted">Цель маршрута</p>
         <p className="text-base font-medium text-ink">{diagnosis.goal}</p>
       </Card>

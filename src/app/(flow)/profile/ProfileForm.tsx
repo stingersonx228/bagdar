@@ -147,7 +147,7 @@ function ProfileFormFields() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Card className="flex flex-col gap-3 bg-line-soft">
+      <Card tone="accent" className="flex flex-col gap-3">
         <p className="text-sm text-ink">
           Нет времени заполнять? Подставим готовый профиль — потом можно поменять любой ответ.
         </p>

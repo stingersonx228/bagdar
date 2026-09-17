@@ -40,4 +40,9 @@
   --font-sans: ui-sans-serif, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --radius-card: 0.875rem;
+
+  /* Мягкая тень: карточки должны отделяться от фона, но не давить.
+     Оттенок берём из цвета текста, а не из чистого чёрного — иначе тень
+     выглядит грязной на зеленоватом фоне. */
+  --shadow-card: 0 1px 2px rgb(16 34 28 / 0.04), 0 10px 28px -16px rgb(16 34 28 / 0.18);
 }
