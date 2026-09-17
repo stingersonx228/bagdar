@@ -10,6 +10,7 @@
 import { Card } from '@/components/ui/Field';
 import { MetroLine, type Station, type StationState } from '@/components/ui/MetroLine';
 import { LoadingState, NeedsProfile } from '@/components/ui/NeedsProfile';
+import { ResetJourney } from '@/components/ui/ResetJourney';
 import { StepNav } from '@/components/ui/StepNav';
 import { useJourney } from '@/store/useJourney';
 import { useJourneyView } from '@/store/useDerived';
@@ -145,6 +146,7 @@ export function RoadmapView() {
       <MetroLine stations={stations} />
 
       <StepNav />
+      <ResetJourney />
     </div>
   );
 }
