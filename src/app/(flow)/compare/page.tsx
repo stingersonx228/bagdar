@@ -1,17 +1,15 @@
-/** ВЛАДЕЛЕЦ: зона C. Станция 5 — сравнение выбранных программ (минимум 2). */
+/** ВЛАДЕЛЕЦ: зона C. Станция 5 — сравнение выбранных программ. */
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
-import { StepNav } from '@/components/ui/StepNav';
+import { CompareView } from './CompareView';
 
 export default function ComparePage() {
   return (
     <>
       <ScreenHeader
         title="Сравнение"
-        lead="Выбранные программы рядом: стоимость, грант, требования, язык обучения и дедлайны с указанием источника."
+        lead="Выбранные программы строка к строке: стоимость, грант, требования и сроки."
       />
-      <div className="mt-auto">
-        <StepNav />
-      </div>
+      <CompareView />
     </>
   );
 }
