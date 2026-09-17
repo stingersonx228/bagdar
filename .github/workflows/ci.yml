@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Свежий пуш отменяет предыдущий прогон той же ветки: перед дедлайном очередь
+# из устаревших сборок только мешает.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Типы
+        run: npm run typecheck
+
+      - name: Линт
+        run: npm run lint
+
+      - name: Юнит-тесты движка
+        run: npm test
+
+      - name: Сборка
+        run: npm run build
+
+      # Ставим только chromium: остальные движки нам не нужны, а качать их
+      # на каждый прогон — минуты впустую.
+      - name: Браузер для e2e
+        run: npx playwright install --with-deps chromium
+
+      - name: Сквозной проход маршрута
+        run: npm run e2e
+
+      - name: Отчёт Playwright при падении
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
