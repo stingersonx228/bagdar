@@ -140,13 +140,27 @@ describe('каталог программ', () => {
     }
   });
 
-  it('пересчитанная стоимость обязана нести пояснение', () => {
+  it('пояснение к цене не бывает пустым и не висит без самой цены', () => {
     for (const program of PROGRAMS) {
       if (program.tuitionNote === null) continue;
 
       expect(program.tuitionNote.length).toBeGreaterThan(0);
       expect(program.tuitionKztPerYear).not.toBeNull();
-      expect(isUnverified(program, 'tuitionKztPerYear')).toBe(false);
+    }
+  });
+
+  it('сверенная зарубежная цена обязана объяснять пересчёт', () => {
+    // Ни один зарубежный вуз не публикует стоимость в тенге, значит за любой
+    // сверенной цифрой стоит пересчёт по курсу. Без подписи она выглядела бы
+    // цитатой из прайса вуза.
+    const foreign = PROGRAMS.filter(
+      (program) => program.country !== 'KZ' && !isUnverified(program, 'tuitionKztPerYear'),
+    );
+
+    expect(foreign.length).toBeGreaterThan(0);
+    for (const program of foreign) {
+      expect(program.tuitionNote).not.toBeNull();
+      expect(program.tuitionNote).toMatch(/курс/i);
     }
   });
 

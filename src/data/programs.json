@@ -405,8 +405,8 @@
       "it"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 3800000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 8185792,
+    "tuitionNote": "18 400 USD за учебный год для поступающих в 2026, с НДС; пересчёт по курс НБ РК на 17.09.2026 (1 USD = 444,88 ₸)",
     "grantAvailable": true,
     "requirements": [
       {
@@ -429,10 +429,9 @@
     ],
     "prestige": "high",
     "career": "medium",
-    "sourceUrl": "https://w3.bilkent.edu.tr/bilkent/",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://w3.bilkent.edu.tr/bilkent/international-and-other-students-tuition-fees/",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
       "minGpa",
@@ -450,8 +449,8 @@
       "engineering"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 2900000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 1067712,
+    "tuitionNote": "1 200 USD за семестр для факультета архитектуры, 2 семестра в году; пересчёт по курс НБ РК на 17.09.2026 (1 USD = 444,88 ₸)",
     "grantAvailable": true,
     "requirements": [
       {
@@ -474,10 +473,9 @@
     ],
     "prestige": "high",
     "career": "medium",
-    "sourceUrl": "https://www.metu.edu.tr/",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://iso.metu.edu.tr/en/system/files/2026-2027_tuition_fees_14092026.pdf",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
       "minGpa",
@@ -495,8 +493,8 @@
       "science"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 2600000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 2322100,
+    "tuitionNote": "110 000 CZK за учебный год, тариф бакалавриата факультета электротехники; пересчёт по курс НБ РК на 17.09.2026 (1 CZK = 21,11 ₸)",
     "grantAvailable": false,
     "requirements": [
       {
@@ -515,10 +513,9 @@
     ],
     "prestige": "high",
     "career": "high",
-    "sourceUrl": "https://www.cvut.cz/en",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://fel.cvut.cz/en/admissions/admission-procedures/tuition-fees",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
       "minGpa",
@@ -555,7 +552,7 @@
     ],
     "prestige": "high",
     "career": "low",
-    "sourceUrl": "https://cuni.cz/UKEN-1.html",
+    "sourceUrl": "https://cuni.cz/UKEN-372.html",
     "checkedAt": "2026-09-16",
     "unverified": [
       "tuitionKztPerYear",
@@ -575,8 +572,8 @@
       "engineering"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 2000000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 3592820,
+    "tuitionNote": "3 500 EUR за семестр для не-граждан ЕС, 2 семестра в году; пересчёт по курс НБ РК на 17.09.2026 (1 EUR = 513,26 ₸)",
     "grantAvailable": true,
     "requirements": [
       {
@@ -595,10 +592,9 @@
     ],
     "prestige": "medium",
     "career": "medium",
-    "sourceUrl": "https://www.bme.hu/?language=en",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://xplore.bme.hu/tuition-fees",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
       "minGpa",
@@ -616,8 +612,8 @@
       "science"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 6500000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 9297992,
+    "tuitionNote": "10 450 USD за семестр, 2 семестра в году; пересчёт по курс НБ РК на 17.09.2026 (1 USD = 444,88 ₸)",
     "grantAvailable": true,
     "requirements": [
       {
@@ -636,10 +632,9 @@
     ],
     "prestige": "high",
     "career": "high",
-    "sourceUrl": "https://semmelweis.hu/english/",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://semmelweis.hu/admission/programs/medicine/",
+    "checkedAt": "2026-09-17",
     "unverified": [
-      "tuitionKztPerYear",
       "grantAvailable",
       "requirements",
       "minGpa",
@@ -657,8 +652,8 @@
       "science"
     ],
     "languageOfStudy": "en",
-    "tuitionKztPerYear": 1600000,
-    "tuitionNote": null,
+    "tuitionKztPerYear": 2430031,
+    "tuitionNote": "89 200 MYR за всю программу; год получен делением на 4 года обучения — срок в источнике не указан. Пересчёт по курс НБ РК на 17.09.2026 (1 MYR = 108,97 ₸)",
     "grantAvailable": false,
     "requirements": [
       {
@@ -677,8 +672,8 @@
     ],
     "prestige": "medium",
     "career": "medium",
-    "sourceUrl": "https://www.um.edu.my/",
-    "checkedAt": "2026-09-16",
+    "sourceUrl": "https://study.um.edu.my/doc/tution-fee/Fee%20Structure%2C%20UG%2C%20International%20-%20Updated%2022%20Oct%202025.pdf",
+    "checkedAt": "2026-09-17",
     "unverified": [
       "tuitionKztPerYear",
       "grantAvailable",
