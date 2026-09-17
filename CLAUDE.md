@@ -18,7 +18,7 @@ Next.js App Router + TypeScript strict, Tailwind, Zustand + persist (localStorag
 
 ## Железные правила
 1. LLM НИКОГДА не выбирает вузы, не придумывает требования и дедлайны. Выбор делает детерминированный движок в `src/engine`. LLM только переформулирует готовые `reasons[]`.
-2. Каждый факт (стоимость, требования, дедлайн) имеет `sourceUrl` + `checkedAt`. Без подтверждённого источника ставится `isDemo: true`, и UI явно показывает бейдж «демо-данные». Неизвестный дедлайн = `null` и в UI «уточнить на сайте», а не выдуманная дата.
+2. Каждый факт (стоимость, требования, дедлайн) имеет `sourceUrl` + `checkedAt`. Поле без подтверждённого источника перечислено в `unverified`, и UI показывает бейдж «демо-данные» точечно на этом поле. Неизвестный дедлайн = `null` и в UI «уточнить на сайте», а не выдуманная дата. Если источник даёт цену в другой единице (вузы КЗ считают в кредитах ECTS), годовая сумма — пересчёт, и он обязан быть подписан в `tuitionNote`.
 3. Никаких процентов шансов и гарантий. Только `high | medium | low` + объяснение.
 4. Рекомендации и roadmap не хранятся в store. Они вычисляются из профиля (derived). В store лежат только профиль, выбор пользователя и выполненные шаги.
 5. Секреты только в `.env.local`. В репо лежит `.env.example`. Ключ API используется только в server route.
@@ -48,19 +48,28 @@ export interface Profile {
   languages: { kz: boolean; ru: boolean; en: 'none' | 'basic' | 'b1' | 'b2' | 'c1' };
   exams: ExamScore[];
   countries: Country[];            // ≥1
+  preferredCities: string[];       // мягкое предпочтение, не фильтр; работает через приоритет 'city'
   budgetKztPerYear: number;        // 0 = только грант
   needsGrant: boolean;
   priorities: Array<'cost' | 'prestige' | 'city' | 'career' | 'language'>;
 }
 
 export interface Deadline { id: string; label: string; date: string | null; sourceUrl: string | null }
+export type VerifiableField =
+  | 'tuitionKztPerYear' | 'grantAvailable' | 'requirements' | 'minGpa' | 'deadlines';
+
 export interface Program {
   id: string; university: string; program: string; country: Country; city: string;
   interests: Interest[]; languageOfStudy: 'kz' | 'ru' | 'en' | 'local';
-  tuitionKztPerYear: number | null; grantAvailable: boolean;
+  tuitionKztPerYear: number | null;
+  tuitionNote: string | null;      // подпись, если годовая сумма — пересчёт (напр. из цены за кредит ECTS)
+  grantAvailable: boolean;
   requirements: { exam: ExamId; minScore: number | null }[];
   minGpa: number | null; deadlines: Deadline[];
-  sourceUrl: string; checkedAt: string; isDemo: boolean;
+  prestige: Level | null;   // редакционная оценка, не факт из источника; шкала грубая намеренно
+  career: Level | null;     // то же самое про карьерные перспективы
+  sourceUrl: string; checkedAt: string;
+  unverified: VerifiableField[];   // поля без источника; пустой массив = всё сверено
 }
 
 export interface Reason { kind: 'match' | 'warning' | 'blocker'; code: string; text: string; weight: number }
@@ -84,7 +93,7 @@ diagnose(profile: Profile): Diagnosis
 buildRoadmap(profile: Profile, recs: Recommendation[], today: Date): RoadmapStep[]
 nextStep(steps: RoadmapStep[], completedIds: string[]): RoadmapStep | null
 ```
-Функции чистые: без сети, случайности и чтения текущего времени изнутри. Пока бросают `NotImplementedError` — реализует зона A.
+Функции чистые: без сети, случайности и чтения текущего времени изнутри. Реализованы зоной A.
 
 ## Контракт состояния — `src/store/useJourney.ts`
 `{ profile, selectedProgramIds, comparedIds, completedStepIds, hydrated }`, экшены `setProfile`, `patchProfile`, `toggleSelected`, `toggleCompared`, `toggleStep`, `reset`. persist `bagdar-journey`, версия 1. Экраны ждут `hydrated`, иначе получат SSR hydration mismatch.
