@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Field';
 import { LoadingState, NeedsProfile } from '@/components/ui/NeedsProfile';
 import { ProgramCard } from '@/components/ui/ProgramCard';
 import { StepNav } from '@/components/ui/StepNav';
+import { ExplainBlock } from './ExplainBlock';
 import { buttonClass } from '@/components/ui/Button';
 import { useJourney } from '@/store/useJourney';
 import { useJourneyView } from '@/store/useDerived';
@@ -50,6 +51,8 @@ export function ResultsView() {
           Изменить ответы
         </Link>
       </Card>
+
+      <ExplainBlock recommendations={recommendations} />
 
       {shown.map((rec) => (
         <ProgramCard

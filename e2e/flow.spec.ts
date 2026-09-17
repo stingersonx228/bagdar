@@ -68,3 +68,22 @@ test('ответы переживают перезагрузку страниц�
   await page.reload();
   await expect(page.getByText('Цель маршрута')).toBeVisible();
 });
+
+test('пересказ от модели не может сломать экран рекомендаций', async ({ page }) => {
+  await page.goto('/profile');
+  await page.getByRole('button', { name: 'Заполнить примером' }).click();
+  await page.getByRole('button', { name: 'Показать рекомендации' }).click();
+  await page.goto('/results');
+
+  const cards = page.getByRole('checkbox', { name: 'В сравнение' });
+  const before = await cards.count();
+
+  await page.getByRole('button', { name: 'Объяснить простыми словами' }).click();
+
+  // Ключа в CI нет, поэтому роут честно отвечает «недоступно». Тест не
+  // проверяет, какая из двух веток сработала, — он проверяет главное: разбор
+  // движка остаётся на месте в любом случае.
+  await expect(page.getByRole('button', { name: 'Объяснить простыми словами' })).toBeHidden();
+  expect(await cards.count()).toBe(before);
+  await expect(cards.first()).toBeVisible();
+});
