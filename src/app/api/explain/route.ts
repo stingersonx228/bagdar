@@ -6,7 +6,7 @@
  * человеческим языком.
  *
  * Правило 5: ключи читаются на сервере и в браузер не попадают.
- * Провайдер: GEMINI_API_KEY (бесплатный тариф) → иначе ANTHROPIC_API_KEY → иначе фолбэк.
+ * Провайдеры по очереди: Gemini → Groq → OpenRouter (бесплатные) → Claude → фолбэк.
  *
  * Роут никогда не отвечает ошибкой наружу так, чтобы экран сломался: без
  * ключа, при сбое API или на подозрительном ответе он возвращает
@@ -32,61 +32,137 @@ function unavailable(reason: ExplainResponse['reason'], status = 200) {
   return NextResponse.json<ExplainResponse>({ ok: false, summary: null, reason }, { status });
 }
 
-/** Потолок ожидания модели: дольше пользователь ждать не должен, будет фолбэк. */
+/** Общий потолок ожидания на всю цепочку: дольше пользователь ждать не должен. */
 const TIMEOUT_MS = 8_000;
 
-/**
- * Gemini — основной провайдер: у Google AI Studio есть бесплатный тариф, для
- * хакатона это важно. Вызов через обычный fetch, без лишней зависимости.
- */
-async function askGemini(apiKey: string, userPrompt: string): Promise<string | null> {
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-    {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-goog-api-key': apiKey },
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
-        generationConfig: { maxOutputTokens: 500, temperature: 0.2 },
-      }),
-    },
-  );
-  if (!response.ok) throw new Error(`Gemini HTTP ${response.status}`);
+type Ask = (userPrompt: string, signal: AbortSignal) => Promise<string | null>;
 
-  const data = (await response.json()) as {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
-  };
-  const text = (data.candidates?.[0]?.content?.parts ?? [])
-    .map((part) => part.text ?? '')
-    .join('\n')
-    .trim();
-  return text.length > 0 ? text : null;
+interface Provider {
+  name: string;
+  ask: Ask;
 }
 
-/** Запасной провайдер: Claude Haiku — быстрый и дешёвый для пересказа. */
-async function askClaude(apiKey: string, userPrompt: string): Promise<string | null> {
-  const client = new Anthropic({ apiKey, timeout: TIMEOUT_MS, maxRetries: 0 });
-  const message = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    // Ответ — два-три предложения, большой потолок здесь не нужен.
-    max_tokens: 500,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userPrompt }],
-  });
-  if (message.stop_reason === 'refusal') return null;
-  return message.content
-    .filter((block) => block.type === 'text')
-    .map((block) => block.text)
-    .join('\n');
+/** Google Gemini: бесплатный тариф в AI Studio, основной провайдер. */
+function gemini(apiKey: string): Provider {
+  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+  return {
+    name: 'gemini',
+    ask: async (userPrompt, signal) => {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-goog-api-key': apiKey },
+          signal,
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+            generationConfig: { maxOutputTokens: 500, temperature: 0.2 },
+          }),
+        },
+      );
+      if (!response.ok) throw new Error(`gemini HTTP ${response.status}`);
+      const data = (await response.json()) as {
+        candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      };
+      const text = (data.candidates?.[0]?.content?.parts ?? [])
+        .map((part) => part.text ?? '')
+        .join('\n')
+        .trim();
+      return text.length > 0 ? text : null;
+    },
+  };
+}
+
+/**
+ * Groq и OpenRouter говорят на OpenAI-совместимом протоколе, поэтому у них
+ * один клиент. У обоих есть бесплатный доступ: у Groq — лимиты в минуту,
+ * у OpenRouter — модели с суффиксом :free.
+ */
+function openAiCompatible(name: string, url: string, apiKey: string, model: string): Provider {
+  return {
+    name,
+    ask: async (userPrompt, signal) => {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${apiKey}` },
+        signal,
+        body: JSON.stringify({
+          model,
+          max_tokens: 500,
+          temperature: 0.2,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: userPrompt },
+          ],
+        }),
+      });
+      if (!response.ok) throw new Error(`${name} HTTP ${response.status}`);
+      const data = (await response.json()) as {
+        choices?: Array<{ message?: { content?: string | null } }>;
+      };
+      const text = data.choices?.[0]?.message?.content?.trim() ?? '';
+      return text.length > 0 ? text : null;
+    },
+  };
+}
+
+/** Claude Haiku — платный, поэтому последний в очереди. */
+function claude(apiKey: string): Provider {
+  return {
+    name: 'claude',
+    ask: async (userPrompt, signal) => {
+      const client = new Anthropic({ apiKey, maxRetries: 0 });
+      const message = await client.messages.create(
+        {
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 500,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: 'user', content: userPrompt }],
+        },
+        { signal },
+      );
+      if (message.stop_reason === 'refusal') return null;
+      return message.content
+        .filter((block) => block.type === 'text')
+        .map((block) => block.text)
+        .join('\n');
+    },
+  };
+}
+
+/** Очередь провайдеров: сначала бесплатные, в порядке качества пересказа. */
+function configuredProviders(): Provider[] {
+  const env = process.env;
+  const list: Provider[] = [];
+  if (env.GEMINI_API_KEY) list.push(gemini(env.GEMINI_API_KEY));
+  if (env.GROQ_API_KEY) {
+    list.push(
+      openAiCompatible(
+        'groq',
+        'https://api.groq.com/openai/v1/chat/completions',
+        env.GROQ_API_KEY,
+        env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+      ),
+    );
+  }
+  if (env.OPENROUTER_API_KEY) {
+    list.push(
+      openAiCompatible(
+        'openrouter',
+        'https://openrouter.ai/api/v1/chat/completions',
+        env.OPENROUTER_API_KEY,
+        env.OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free',
+      ),
+    );
+  }
+  if (env.ANTHROPIC_API_KEY) list.push(claude(env.ANTHROPIC_API_KEY));
+  return list;
 }
 
 export async function POST(request: Request) {
-  const geminiKey = process.env.GEMINI_API_KEY;
-  const claudeKey = process.env.ANTHROPIC_API_KEY;
-  if (!geminiKey && !claudeKey) return unavailable('no-key');
+  const providers = configuredProviders();
+  if (providers.length === 0) return unavailable('no-key');
 
   let body: unknown;
   try {
@@ -99,20 +175,22 @@ export async function POST(request: Request) {
   if (!parsed) return unavailable('bad-request', 400);
 
   const userPrompt = buildUserPrompt(parsed);
+  const signal = AbortSignal.timeout(TIMEOUT_MS);
+  let rejected = false;
 
-  try {
-    const text = geminiKey
-      ? await askGemini(geminiKey, userPrompt)
-      : await askClaude(claudeKey ?? '', userPrompt);
-    if (text === null) return unavailable('rejected');
-
-    const summary = validateSummary(text);
-    if (summary === null) return unavailable('rejected');
-
-    return NextResponse.json<ExplainResponse>({ ok: true, summary });
-  } catch (error) {
-    // Наружу текст ошибки не отдаём: в нём может быть служебная информация.
-    console.error('[explain] вызов модели не удался', error);
-    return unavailable('api-error');
+  // Упал провайдер или упёрся в бесплатный лимит — пробуем следующего.
+  for (const provider of providers) {
+    if (signal.aborted) break;
+    try {
+      const text = await provider.ask(userPrompt, signal);
+      const summary = text === null ? null : validateSummary(text);
+      if (summary !== null) return NextResponse.json<ExplainResponse>({ ok: true, summary });
+      rejected = true;
+    } catch (error) {
+      // Наружу текст ошибки не отдаём: в нём может быть служебная информация.
+      console.error(`[explain] ${provider.name} не ответил`, error);
+    }
   }
+
+  return unavailable(rejected ? 'rejected' : 'api-error');
 }
