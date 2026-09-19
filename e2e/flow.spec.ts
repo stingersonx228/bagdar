@@ -48,8 +48,7 @@ test('маршрут проходится от начала до плана по
 
   // План собран, и первый невыполненный шаг подписан как следующий.
   await expect(page).toHaveURL(/\/roadmap$/);
-  // exact, иначе совпадает ещё и подпись «следующий шаг» на самом шаге.
-  await expect(page.getByText('Следующий шаг', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('next-step')).toBeVisible();
 
   const steps = page.getByRole('checkbox');
   expect(await steps.count()).toBeGreaterThan(0);
@@ -57,6 +56,31 @@ test('маршрут проходится от начала до плана по
 
   await steps.first().check();
   await expect(page.getByText(/^1 из \d+$/)).toBeVisible();
+
+  // Отметка шага переживает перезагрузку: прогресс лежит в persist-сторе.
+  await page.reload();
+  await expect(page.getByText(/^1 из \d+$/)).toBeVisible();
+
+  // «Готово, дальше» в блоке следующего шага тоже двигает прогресс.
+  await page.getByRole('button', { name: 'Готово, дальше' }).click();
+  await expect(page.getByText(/^2 из \d+$/)).toBeVisible();
+});
+
+test('смена бюджета на выдаче меняет список и показывает, что изменилось', async ({ page }) => {
+  await fillSample(page);
+  await page.goto('/results');
+
+  const titles = page.getByRole('heading', { level: 2 });
+  await page.getByRole('button', { name: 'Чехия' }).click();
+  await page.getByRole('button', { name: 'Южная Корея' }).click();
+  await page.locator('#tuner-budget').fill('10000000');
+  const before = (await titles.allTextContents()).join('|');
+
+  await page.locator('#tuner-budget').fill('0');
+
+  await expect.poll(async () => (await titles.allTextContents()).join('|')).not.toBe(before);
+  await expect(page.getByTestId('results-diff')).toBeVisible();
+  await expect(page.getByTestId('hidden-summary')).toContainText('Скрыто');
 });
 
 test('ответы переживают перезагрузку страницы', async ({ page }) => {
