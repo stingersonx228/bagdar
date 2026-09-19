@@ -6,13 +6,12 @@
  * человеческим языком.
  *
  * Правило 5: ключи читаются на сервере и в браузер не попадают.
- * Провайдеры по очереди: Gemini → Groq → OpenRouter (бесплатные) → Claude → фолбэк.
+ * Провайдеры по очереди, все с бесплатным тарифом: Gemini → Groq → OpenRouter → фолбэк.
  *
  * Роут никогда не отвечает ошибкой наружу так, чтобы экран сломался: без
  * ключа, при сбое API или на подозрительном ответе он возвращает
  * { ok: false }, а интерфейс просто оставляет исходные причины движка.
  */
-import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 import {
   SYSTEM_PROMPT,
@@ -107,31 +106,7 @@ function openAiCompatible(name: string, url: string, apiKey: string, model: stri
   };
 }
 
-/** Claude Haiku — платный, поэтому последний в очереди. */
-function claude(apiKey: string): Provider {
-  return {
-    name: 'claude',
-    ask: async (userPrompt, signal) => {
-      const client = new Anthropic({ apiKey, maxRetries: 0 });
-      const message = await client.messages.create(
-        {
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 500,
-          system: SYSTEM_PROMPT,
-          messages: [{ role: 'user', content: userPrompt }],
-        },
-        { signal },
-      );
-      if (message.stop_reason === 'refusal') return null;
-      return message.content
-        .filter((block) => block.type === 'text')
-        .map((block) => block.text)
-        .join('\n');
-    },
-  };
-}
-
-/** Очередь провайдеров: сначала бесплатные, в порядке качества пересказа. */
+/** Очередь провайдеров — только бесплатные тарифы, в порядке качества пересказа. */
 function configuredProviders(): Provider[] {
   const env = process.env;
   const list: Provider[] = [];
@@ -156,7 +131,6 @@ function configuredProviders(): Provider[] {
       ),
     );
   }
-  if (env.ANTHROPIC_API_KEY) list.push(claude(env.ANTHROPIC_API_KEY));
   return list;
 }
 
