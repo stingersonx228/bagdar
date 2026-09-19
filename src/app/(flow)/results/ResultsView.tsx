@@ -15,6 +15,31 @@ import { PROGRAMS } from '@/data';
 import type { Recommendation } from '@/types';
 import { HIDDEN_LABELS, hiddenSummary } from './hiddenSummary';
 import { useChangeDiff, type ChangeDiff } from './useChangeDiff';
+import { leversFor } from './levers';
+import type { Level, Profile } from '@/types';
+
+const LEVEL_TEXT: Record<Level, string> = { high: 'высокий', medium: 'средний', low: 'низкий' };
+
+function Levers({ profile, rec }: { profile: Profile; rec: Recommendation }) {
+  const levers = leversFor(profile, rec);
+  if (levers.length === 0) return null;
+  return (
+    <div
+      data-testid="levers"
+      className="-mt-2 rounded-b-card border border-t-0 border-hairline bg-line-soft px-4 pb-3 pt-4 text-sm"
+    >
+      <p className="font-semibold text-line-dark">Что поднимет шанс</p>
+      <ul className="mt-1 flex flex-col gap-1">
+        {levers.map((lever) => (
+          <li key={lever.action} className="text-ink">
+            {lever.action} → шанс станет <span className="font-semibold">{LEVEL_TEXT[lever.to]}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-1 text-xs text-muted">Посчитано тем же движком правил, без AI и процентов.</p>
+    </div>
+  );
+}
 
 /** Подсветка карточек, изменившихся после правки параметров. */
 const FLASH_CSS = `@keyframes bagdar-flash {
@@ -125,6 +150,7 @@ export function ResultsView() {
             toggleCompared(rec.program.id);
           }}
         />
+        <Levers profile={profile} rec={rec} />
         </div>
       ))}
 
