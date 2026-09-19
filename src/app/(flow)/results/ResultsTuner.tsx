@@ -8,11 +8,19 @@
  * переходами. Здесь те же поля профиля, только рядом со списком: подборка
  * пересчитывается на месте, потому что рекомендации — производные от профиля.
  */
-import { MultiChoice, type Choice } from '@/components/ui/Choice';
+import { MultiChoice, SingleChoice, type Choice } from '@/components/ui/Choice';
 import { Card } from '@/components/ui/Field';
-import { COUNTRY_LABELS, formatKzt } from '@/engine';
+import { COUNTRY_LABELS, EXAM_LABELS, INTEREST_LABELS, formatKzt } from '@/engine';
 import { useJourney } from '@/store/useJourney';
-import type { Country, Profile } from '@/types';
+import type { Country, ExamId, ExamScore, Interest, Profile } from '@/types';
+
+const INTEREST_CHOICES: readonly Choice<Interest>[] = (
+  Object.keys(INTEREST_LABELS) as Interest[]
+).map((value) => ({ value, label: INTEREST_LABELS[value] }));
+
+const EXAM_CHOICES: readonly Choice<ExamId>[] = (Object.keys(EXAM_LABELS) as ExamId[]).map(
+  (value) => ({ value, label: EXAM_LABELS[value] }),
+);
 
 const COUNTRY_CHOICES: readonly Choice<Country>[] = (
   Object.keys(COUNTRY_LABELS) as Country[]
@@ -46,6 +54,61 @@ export function ResultsTuner({ profile }: { profile: Profile }) {
           onChange={(event) => patchProfile({ budgetKztPerYear: Number(event.target.value) })}
           className="h-11 w-full accent-line"
         />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-muted">Главный интерес</span>
+        <SingleChoice
+          label="Главный интерес"
+          choices={INTEREST_CHOICES}
+          value={profile.interests[0]}
+          onChange={(interest) =>
+            patchProfile({
+              interests: [interest, ...profile.interests.filter((item) => item !== interest)].slice(0, 3),
+            })
+          }
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-muted">Экзамены</span>
+        <MultiChoice
+          label="Экзамены"
+          choices={EXAM_CHOICES}
+          value={profile.exams.map((exam) => exam.id)}
+          onChange={(ids) => {
+            // Новый экзамен добавляется без результата: выдумывать балл нельзя,
+            // движок честно пометит его как «ещё не сдан».
+            const exams: ExamScore[] = ids.map(
+              (id) =>
+                profile.exams.find((exam) => exam.id === id) ?? { id, score: null, plannedDate: null },
+            );
+            patchProfile({ exams });
+          }}
+        />
+        {profile.exams.map((exam) => (
+          <label key={exam.id} className="flex items-center justify-between gap-3 text-sm text-muted">
+            <span>Балл {EXAM_LABELS[exam.id]}</span>
+            <input
+              type="number"
+              inputMode="decimal"
+              min={0}
+              step="any"
+              value={exam.score ?? ''}
+              placeholder="нет"
+              aria-label={`Балл ${EXAM_LABELS[exam.id]}`}
+              onChange={(event) => {
+                const raw = event.target.value;
+                const score = raw === '' ? null : Number(raw);
+                if (score !== null && !Number.isFinite(score)) return;
+                patchProfile({
+                  exams: profile.exams.map((item) => (item.id === exam.id ? { ...item, score } : item)),
+                });
+              }}
+              className="h-11 w-24 rounded-lg border border-hairline bg-surface px-3 text-right text-ink"
+            />
+          </label>
+        ))}
       </div>
 
       <div className="flex flex-col gap-2">

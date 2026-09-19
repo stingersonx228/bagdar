@@ -11,6 +11,43 @@ import { ResultsTuner } from './ResultsTuner';
 import { buttonClass } from '@/components/ui/Button';
 import { useJourney } from '@/store/useJourney';
 import { useJourneyView } from '@/store/useDerived';
+import { PROGRAMS } from '@/data';
+import type { Recommendation } from '@/types';
+import { HIDDEN_LABELS, hiddenSummary } from './hiddenSummary';
+import { useChangeDiff, type ChangeDiff } from './useChangeDiff';
+
+/** Подсветка карточек, изменившихся после правки параметров. */
+const FLASH_CSS = `@keyframes bagdar-flash {
+  0% { box-shadow: 0 0 0 3px var(--color-line); transform: scale(1.015); }
+  100% { box-shadow: 0 0 0 0 transparent; transform: scale(1); }
+}
+.bagdar-flash { animation: bagdar-flash 1.6s ease-out; border-radius: 1rem; }
+@media (prefers-reduced-motion: reduce) { .bagdar-flash { animation: none; outline: 2px solid var(--color-line); } }`;
+
+function nameOf(recs: Recommendation[], id: string): string {
+  return recs.find((rec) => rec.program.id === id)?.program.university ?? id;
+}
+
+function DiffBanner({ diff, all }: { diff: ChangeDiff; all: Recommendation[] }) {
+  const lines: string[] = [];
+  if (diff.added.length > 0) lines.push(`появились: ${diff.added.map((id) => nameOf(all, id)).join(', ')}`);
+  if (diff.removed.length > 0) lines.push(`ушли из топа: ${diff.removed.map((id) => nameOf(all, id)).join(', ')}`);
+  if (diff.chanceChanged.length > 0) lines.push(`сменился шанс: ${diff.chanceChanged.length}`);
+  if (lines.length === 0 && diff.moved.length > 0) lines.push(`поменялся порядок: ${diff.moved.length}`);
+  if (lines.length === 0) return null;
+
+  return (
+    <div
+      key={diff.stamp}
+      role="status"
+      aria-live="polite"
+      data-testid="results-diff"
+      className="bagdar-flash rounded-card border border-line bg-line-soft p-3 text-sm text-line-dark"
+    >
+      <span className="font-semibold">Подборка пересчитана:</span> {lines.join(' · ')}
+    </div>
+  );
+}
 
 /** Показываем осмысленную верхушку: дальше идут программы с низким совпадением. */
 const VISIBLE = 6;
@@ -20,6 +57,8 @@ export function ResultsView() {
   const comparedIds = useJourney((state) => state.comparedIds);
   const toggleSelected = useJourney((state) => state.toggleSelected);
   const toggleCompared = useJourney((state) => state.toggleCompared);
+
+  const diff = useChangeDiff(recommendations.slice(0, VISIBLE));
 
   if (!hydrated) return <LoadingState what="рекомендации" />;
   if (!profile) return <NeedsProfile what="Подборка программ" />;
@@ -39,6 +78,8 @@ export function ResultsView() {
   }
 
   const shown = recommendations.slice(0, VISIBLE);
+  const hidden = hiddenSummary(profile, PROGRAMS, recommendations, VISIBLE);
+  const changed = new Set(diff ? [...diff.added, ...diff.chanceChanged, ...diff.moved] : []);
 
   return (
     <div className="flex flex-col gap-4">
@@ -53,13 +94,27 @@ export function ResultsView() {
         </Link>
       </Card>
 
+      <style>{FLASH_CSS}</style>
       <ResultsTuner profile={profile} />
+
+      {diff ? <DiffBanner diff={diff} all={recommendations} /> : null}
+
+      {hidden.total > 0 ? (
+        <p className="text-sm text-muted" data-testid="hidden-summary">
+          Скрыто {hidden.total} вариантов:{' '}
+          {hidden.parts.map((part) => `${HIDDEN_LABELS[part.cause]} — ${part.count}`).join(' / ')}
+        </p>
+      ) : null}
 
       <ExplainBlock recommendations={recommendations} />
 
       {shown.map((rec) => (
+        <div
+          key={changed.has(rec.program.id) ? `${rec.program.id}:${diff?.stamp}` : rec.program.id}
+          className={changed.has(rec.program.id) ? 'bagdar-flash' : undefined}
+          data-testid="program-card"
+        >
         <ProgramCard
-          key={rec.program.id}
           rec={rec}
           compared={comparedIds.includes(rec.program.id)}
           onToggleCompare={() => {
@@ -70,13 +125,8 @@ export function ResultsView() {
             toggleCompared(rec.program.id);
           }}
         />
+        </div>
       ))}
-
-      {recommendations.length > VISIBLE ? (
-        <p className="text-sm text-muted">
-          Ещё {recommendations.length - VISIBLE} программ подошли слабее и в список не попали.
-        </p>
-      ) : null}
 
       <StepNav />
     </div>
